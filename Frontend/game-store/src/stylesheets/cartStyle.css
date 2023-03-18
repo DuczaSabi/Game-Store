@@ -1,0 +1,28 @@
+body {
+  background-color: green;
+  text-align: center;
+}
+
+.product {
+  display: block;
+  text-align: left;
+  padding-left: 40px;
+  margin-top: 20px;
+}
+
+.product > img {
+  min-width: 180px;
+  width: 25%;
+}
+
+.product > .gameName {
+  display: inline-block;
+  font-weight: bold;
+  font-size: larger;
+  width: 30%;
+}
+
+.product > .priceRemove {
+  display: inline-block;
+  min-width: 41.385%;
+}

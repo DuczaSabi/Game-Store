@@ -1,0 +1,27 @@
+body {
+  background-image: linear-gradient(to bottom right, orange, purple);
+  background-attachment: fixed;
+  background-size: 200% 200%;
+  animation: bg 30s ease-in-out infinite;
+}
+
+h1 {
+  text-align: center;
+  padding-top: 20px;
+  font-size: 48px;
+  font-family: "Signika", sans-serif;
+  color: rgb(140, 140, 140);
+}
+
+/* Animatons */
+@keyframes bg {
+  0% {
+    background-position: 10% 0%;
+  }
+  50% {
+    background-position: 41% 100%;
+  }
+  100% {
+    background-position: 10% 0%;
+  }
+}
