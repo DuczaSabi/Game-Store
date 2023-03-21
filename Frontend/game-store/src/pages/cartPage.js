@@ -1,7 +1,25 @@
 import React from "react";
-import "../stylesheets/cartStyle.css";
 import { Button, Paper, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+
+const product = {
+  display: "block",
+  textAlign: "left",
+  paddingLeft: "40px",
+  marginTop: "20px",
+};
+
+const gameName = {
+  display: "inlineBlock",
+  fontWeight: "bold",
+  fontSize: "larger",
+  width: "30%",
+};
+
+const priceRemove = {
+  display: "inlineBlock",
+  minWidth: "41.385%",
+};
 
 const CartPage = () => {
   return (
@@ -18,20 +36,20 @@ const CartPage = () => {
         <h1 style={{ textAlign: "left", marginLeft: "45px" }}>My cart</h1>
         <hr></hr>
 
-        <div class="product">
+        <div style={product}>
           <img
             src="../stockImg.png"
             alt="Game_Image"
             style={{ marginLeft: "30px", display: "inline-block" }}
           ></img>
-          <p class="gameName">Game name</p>
-          <div class="priceRemove">
+          <p style={gameName}>Game name</p>
+          <div style={priceRemove}>
             <p style={{ display: "inline-block" }}>20$</p>
             <Button
               variant="outlined"
               sx={{
                 float: "right",
-                marginLeft: "80px",
+                marginRight: "20px",
               }}
               startIcon={<DeleteIcon />}
             >
@@ -40,20 +58,20 @@ const CartPage = () => {
           </div>
         </div>
         <hr></hr>
-        <div class="product">
+        <div style={product}>
           <img
             src="../stockImg.png"
             alt="Game_Image"
             style={{ marginLeft: "30px", display: "inline-block" }}
           ></img>
-          <p class="gameName">Game name</p>
-          <div class="priceRemove">
+          <p style={gameName}>Game name</p>
+          <div style={priceRemove}>
             <p style={{ display: "inline-block" }}>20$</p>
             <Button
               variant="outlined"
               sx={{
                 float: "right",
-                marginLeft: "80px",
+                marginRight: "20px",
               }}
               startIcon={<DeleteIcon />}
             >
