@@ -13,6 +13,27 @@ import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { withTheme } from "@emotion/react";
+import ArrowForwardIos from "@mui/icons-material/ArrowForwardIos";
+
+const signInButton = {
+  position: "absolute",
+  bottom: 20,
+  left: 20,
+};
+
+const guestButton = {
+  position: "absolute",
+  bottom: -55,
+  right: 0,
+  color: "white",
+};
+
+const loginButton = {
+  position: "absolute",
+  bottom: 20,
+  right: 20,
+};
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -29,6 +50,7 @@ const LoginPage = () => {
         elevation={3}
         text-align="center"
         sx={{
+          position: "relative",
           width: 550,
           height: 350,
           paddingLeft: 2,
@@ -67,18 +89,18 @@ const LoginPage = () => {
             />
           </FormControl>
         </Box>
-        <Button size="small" sx={{ float: "left", marginTop: "60px" }}>
+        <Button href="/signin" size="large" style={signInButton}>
           Don't have an account yet?
         </Button>
         <Button
           size="large"
-          variant="contained"
-          href=""
-          sx={{
-            float: "right",
-            margin: "50px 20px auto auto",
-          }}
+          href="/"
+          style={guestButton}
+          endIcon={<ArrowForwardIos />}
         >
+          Continue to page (As guest)
+        </Button>
+        <Button size="large" variant="contained" href="" style={loginButton}>
           Login
         </Button>
       </Paper>

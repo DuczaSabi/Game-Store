@@ -1,6 +1,8 @@
 import React from "react";
 import { Button, Paper, TextField } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 
 const product = {
   display: "block",
@@ -46,32 +48,10 @@ const CartPage = () => {
           <div style={priceRemove}>
             <p style={{ display: "inline-block" }}>20$</p>
             <Button
-              variant="outlined"
               sx={{
                 float: "right",
                 marginRight: "20px",
-              }}
-              startIcon={<DeleteIcon />}
-            >
-              Remove product
-            </Button>
-          </div>
-        </div>
-        <hr></hr>
-        <div style={product}>
-          <img
-            src="../stockImg.png"
-            alt="Game_Image"
-            style={{ marginLeft: "30px", display: "inline-block" }}
-          ></img>
-          <p style={gameName}>Game name</p>
-          <div style={priceRemove}>
-            <p style={{ display: "inline-block" }}>20$</p>
-            <Button
-              variant="outlined"
-              sx={{
-                float: "right",
-                marginRight: "20px",
+                color: "red",
               }}
               startIcon={<DeleteIcon />}
             >
@@ -84,7 +64,7 @@ const CartPage = () => {
       <Paper
         elevation={3}
         sx={{
-          width: "500px",
+          width: "420px",
           display: "inline-block",
           textAlign: "left",
           padding: "40px",
@@ -132,6 +112,21 @@ const CartPage = () => {
           Pay
         </Button>
       </Paper>
+
+      <Button
+        href="/"
+        sx={{
+          color: "white",
+          borderColor: "white",
+          fontSize: "20px",
+          position: "fixed",
+          bottom: "60px",
+          right: "80px",
+        }}
+        startIcon={<ArrowBackIos />}
+      >
+        Leave cart
+      </Button>
     </>
   );
 };

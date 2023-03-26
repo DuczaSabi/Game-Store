@@ -6,8 +6,17 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions } from "@mui/material";
+import { Button, CardActionArea, CardActions, IconButton } from "@mui/material";
 import { fetchGames } from "../store/actions/games.js";
+import Badge from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
+import GroupAddIcon from "@mui/icons-material/GroupAdd";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { orange } from "@mui/material/colors";
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {},
+}));
 
 const header = {
   backgroundImage:
@@ -23,10 +32,18 @@ const logo = {
   position: "absolute",
   left: 0,
   top: 0,
+  width: "250px",
 };
 
 const buttons = {
   display: "inline",
+};
+
+const logoutRegister = {
+  display: "inlineBlock",
+  position: "absolute",
+  right: "90px",
+  top: 0,
 };
 
 const cart = {
@@ -34,6 +51,25 @@ const cart = {
   position: "absolute",
   right: 0,
   top: 0,
+};
+
+const addButton = {
+  display: "flex",
+  position: "absolute",
+  bottom: "20px",
+  left: "20px",
+  fontSize: "20px",
+  color: "primary",
+};
+
+const price = {
+  display: "flex",
+  position: "absolute",
+  bottom: "25px",
+  right: "35px",
+  color: "text.secondary",
+  fontWeight: "bold",
+  fontSize: "25px",
 };
 
 const products = {};
@@ -50,12 +86,26 @@ const HomePage = () => {
   const gameState = useSelector((state) => state.games);
   const { data, isFetching, errorMessage } = gameState;
 
-  console.log(data);
+  function addToCart(game) {
+    let data = sessionStorage.getItem("cart");
+    let arr = [];
+
+    console.log("DATA", data);
+    if (data) {
+      arr = data;
+      arr.push(JSON.stringify(game));
+    } else {
+      arr.push(JSON.stringify(game));
+    }
+    sessionStorage.setItem("cart", arr);
+    console.log(data);
+  }
+
   return (
     <>
       <div style={header}>
         <img
-          src="../../public/gameStoreLogo.png"
+          src={require("./gameStoreLogo.webp")}
           alt="Game Store Logo"
           style={logo}
         ></img>
@@ -82,16 +132,34 @@ const HomePage = () => {
             )
           )}
         </div>
-        <div style={cart}>
-          <Button sx={{ color: "purple", marginTop: "10px" }}>
+        <IconButton
+          style={logoutRegister}
+          href="/login"
+          sx={{ color: "purple", marginTop: "10px", marginRight: "20px" }}
+        >
+          <LogoutIcon
+            sx={{
+              width: "50px",
+              height: "50px",
+            }}
+          ></LogoutIcon>
+        </IconButton>
+
+        <IconButton
+          style={cart}
+          href="/cart"
+          aria-label="cart"
+          sx={{ color: "purple", marginTop: "10px", marginRight: "20px" }}
+        >
+          <StyledBadge badgeContent={3} color="secondary">
             <ShoppingCartIcon
               sx={{
                 width: "50px",
                 height: "50px",
               }}
             ></ShoppingCartIcon>
-          </Button>
-        </div>
+          </StyledBadge>
+        </IconButton>
       </div>
       <div style={products}>
         {isFetching
@@ -106,6 +174,7 @@ const HomePage = () => {
                   width: 350,
                   height: 420,
                   display: "inline-block",
+                  position: "relative",
                   margin: 2,
                   textAlign: "left",
                 }}
@@ -113,30 +182,21 @@ const HomePage = () => {
                 <CardActionArea>
                   <CardMedia
                     component="img"
-                    height="140"
-                    image="/static/images/cards/contemplative-reptile.jpg"
+                    height="250"
+                    image={require("./stockImg.png")}
                     alt="game image"
                   />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                       {game.Title}
                     </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {game.Link}
-                    </Typography>
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  <Button size="small" color="primary">
+                  <Button style={addButton} onClick={() => addToCart(game)}>
                     Add to cart
                   </Button>
-                  <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{ fontWeight: "bold", marginLeft: 8 }}
-                  >
-                    20$
-                  </Typography>
+                  <Typography style={price}>20$</Typography>
                 </CardActions>
               </Card>
             ))
