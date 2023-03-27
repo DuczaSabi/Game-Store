@@ -6,7 +6,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Button, CardActionArea, CardActions, IconButton } from "@mui/material";
+import { Button, CardActionArea, CardActions, IconButton, useStepContext } from "@mui/material";
 import { fetchGames } from "../store/actions/games.js";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
@@ -14,6 +14,7 @@ import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Input from "@mui/material/Input";
 import Grow from "@mui/material/Grow";
+const _ = require('lodash');
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {},
@@ -85,10 +86,11 @@ const HomePage = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchGames());
+    dispatch(fetchGames('all', null));
   }, []);
 
   const [cartItemsNumber, setCartItemsNumber] = useState(sessionStorage.getItem("cart") ? JSON.parse(sessionStorage.getItem("cart")).length : 0)
+  let inputVal = ''
 
   const gameState = useSelector((state) => state.games);
   const { data, isFetching, errorMessage } = gameState;
@@ -105,6 +107,18 @@ const HomePage = () => {
     setCartItemsNumber(cartItemsNumber + 1)
   }
 
+  function handleCategoryClick (category) {
+    dispatch(fetchGames(category));
+  }
+
+  function handleSeach (serach) {
+    dispatch(fetchGames('', serach));
+  }
+
+  const debounce_fun = _.debounce(function (search) {
+    handleSeach(search)
+  }, 500);
+
   return (
     <>
       <div style={ header }>
@@ -113,7 +127,7 @@ const HomePage = () => {
           alt="Game Store Logo"
           style={ logo }
         ></img>
-        <Input placeholder="Search..." style={ searchBar } />
+        <Input placeholder="Search..." style={ searchBar } onChange={ (e) => { debounce_fun(e.target.value) } } />
         { categories.map(
           (category, index) => (
             (categLegnth = category.length),
@@ -130,7 +144,7 @@ const HomePage = () => {
                   marginLeft: "15px",
                 } }
                 variant="text"
-                onClick={ fetchGames(`SELECT * FROM sortgenre('${ category }')`) }
+                onClick={ () => handleCategoryClick(category) }
               >
                 { category }
               </Button>
@@ -195,6 +209,9 @@ const HomePage = () => {
                       <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
                           { game.Title }
+                        </Typography>
+                        <Typography gutterBottom variant="h7" component="div">
+                          { game.Genre }
                         </Typography>
                       </CardContent>
                     </CardActionArea>
