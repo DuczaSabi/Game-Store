@@ -88,40 +88,39 @@ const HomePage = () => {
     dispatch(fetchGames());
   }, []);
 
+  const [cartItemsNumber, setCartItemsNumber] = useState(JSON.parse(sessionStorage.getItem("cart")).length || 0)
+
   const gameState = useSelector((state) => state.games);
   const { data, isFetching, errorMessage } = gameState;
 
-  function addToCart(game) {
+  function addToCart (game) {
     let data = sessionStorage.getItem("cart");
-    let arr = [];
 
-    console.log("DATA", data);
-    if (data) {
-      arr = data;
-      arr.push(JSON.stringify(game));
-    } else {
-      arr.push(JSON.stringify(game));
-    }
-    sessionStorage.setItem("cart", arr);
-    console.log(data);
+    if (data === null) data = []
+    else data = JSON.parse(data)
+
+    data.push(game);
+
+    sessionStorage.setItem("cart", JSON.stringify(data));
+    setCartItemsNumber(cartItemsNumber + 1)
   }
 
   return (
     <>
-      <div style={header}>
+      <div style={ header }>
         <img
-          src={require("./gameStoreLogo.webp")}
+          src={ require("./gameStoreLogo.webp") }
           alt="Game Store Logo"
-          style={logo}
+          style={ logo }
         ></img>
-        <Input placeholder="Search..." style={searchBar} />
-        {categories.map(
+        <Input placeholder="Search..." style={ searchBar } />
+        { categories.map(
           (category, index) => (
             (categLegnth = category.length),
             (
               <Button
-                key={index}
-                sx={{
+                key={ index }
+                sx={ {
                   display: "inline-block",
                   width: 60 + categLegnth * 15 + "px",
                   height: "50px",
@@ -129,88 +128,88 @@ const HomePage = () => {
                   fontSize: "30px",
                   marginTop: "-17px",
                   marginLeft: "15px",
-                }}
+                } }
                 variant="text"
-                onClick={fetchGames(`SELECT * FROM sortgenre('${category}')`)}
+                onClick={ fetchGames(`SELECT * FROM sortgenre('${ category }')`) }
               >
-                {category}
+                { category }
               </Button>
             )
           )
-        )}
+        ) }
         <IconButton
-          style={logoutRegister}
+          style={ logoutRegister }
           href="/login"
-          sx={{ color: "purple", marginTop: "10px", marginRight: "20px" }}
+          sx={ { color: "purple", marginTop: "10px", marginRight: "20px" } }
         >
           <LogoutIcon
-            sx={{
+            sx={ {
               width: "50px",
               height: "50px",
-            }}
+            } }
           ></LogoutIcon>
         </IconButton>
 
         <IconButton
-          style={cart}
+          style={ cart }
           href="/cart"
           aria-label="cart"
-          sx={{ color: "purple", marginTop: "10px", marginRight: "20px" }}
+          sx={ { color: "purple", marginTop: "10px", marginRight: "20px" } }
         >
-          <StyledBadge badgeContent={3} color="secondary">
+          <StyledBadge badgeContent={ cartItemsNumber } color="secondary">
             <ShoppingCartIcon
-              sx={{
+              sx={ {
                 width: "50px",
                 height: "50px",
-              }}
+              } }
             ></ShoppingCartIcon>
           </StyledBadge>
         </IconButton>
       </div>
-      <div style={products}>
-        {isFetching
+      <div style={ products }>
+        { isFetching
           ? "Loading products"
           : errorMessage
-          ? "error"
-          : data && data.length > 0
-          ? data.map((game, index) => (
-              <Grow in={true}>
-                <Card
-                  key={index}
-                  sx={{
-                    width: 350,
-                    height: 420,
-                    display: "inline-block",
-                    position: "relative",
-                    margin: 2,
-                    textAlign: "left",
-                  }}
-                >
-                  <CardActionArea href={game.Link}>
-                    <CardMedia
-                      component="img"
-                      height="250"
-                      image={require("./stockImg.png")}
-                      alt="game image"
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {game.Title}
+            ? "error"
+            : data && data.length > 0
+              ? data.map((game, index) => (
+                <Grow in={ true }>
+                  <Card
+                    key={ index }
+                    sx={ {
+                      width: 350,
+                      height: 420,
+                      display: "inline-block",
+                      position: "relative",
+                      margin: 2,
+                      textAlign: "left",
+                    } }
+                  >
+                    <CardActionArea href={ game.Link }>
+                      <CardMedia
+                        component="img"
+                        height="250"
+                        image={ require("./stockImg.png") }
+                        alt="game image"
+                      />
+                      <CardContent>
+                        <Typography gutterBottom variant="h5" component="div">
+                          { game.Title }
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                      <Button style={ addButton } onClick={ () => addToCart(game) }>
+                        Add to cart
+                      </Button>
+                      <Typography style={ price }>
+                        { game.Price > 0 ? game.Price + "$" : "Free" }
                       </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
-                    <Button style={addButton} onClick={() => addToCart(game)}>
-                      Add to cart
-                    </Button>
-                    <Typography style={price}>
-                      {game.Price > 0 ? game.Price + "$" : "Free"}
-                    </Typography>
-                  </CardActions>
-                </Card>
-              </Grow>
-            ))
-          : "no games found"}
+                    </CardActions>
+                  </Card>
+                </Grow>
+              ))
+              : "no games found" }
       </div>
     </>
   );
