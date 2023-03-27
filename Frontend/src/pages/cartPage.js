@@ -55,6 +55,14 @@ const CartPage = () => {
 
   const [cartItems, setCartItems] = useState(sessionStorage.getItem("cart") ? JSON.parse(sessionStorage.getItem("cart")) : null)
 
+  const removeProduct = (game) => {
+    let cartData = JSON.parse(sessionStorage.getItem("cart"))
+    cartData.splice(cartData.indexOf(game), 1)
+    sessionStorage.setItem("cart", JSON.stringify(cartData));
+    setCartItems(cartData)
+
+  }
+
   console.log(cartItems)
   return (
     <>
@@ -81,6 +89,7 @@ const CartPage = () => {
                 ></img>
                 <p style={ gamePrice }>20$</p>
                 <Button
+                  onClick={ () => removeProduct(item) }
                   variant="outlined"
                   style={ removeButton }
                   startIcon={ <DeleteIcon /> }
