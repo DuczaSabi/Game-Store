@@ -70,12 +70,11 @@ const CartPage = () => {
         quantity: sessionStorage.getItem("cart") ? JSON.parse(sessionStorage.getItem("cart")).length : 0,
       }],
       mode: "payment",
-      successUrl: `${ window.location.origin }`,
+      successUrl: `${ window.location.origin }/payment/success`,
       cancelUrl: `${ window.location.origin }`,
       // customerEmail: 
     })
     if (error) console.log(error)
-
   }
 
   console.log(cartItems)
