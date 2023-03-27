@@ -5,4 +5,6 @@ async function fetchGames(req, res) {
   res.json(result.rows);
 }
 
+//SELECT * FROM sortgenre('${genre}')
+
 module.exports = { fetchGames };

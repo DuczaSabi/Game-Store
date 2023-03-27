@@ -12,7 +12,8 @@ import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { orange } from "@mui/material/colors";
+import Input from "@mui/material/Input";
+import Grow from "@mui/material/Grow";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {},
@@ -35,8 +36,12 @@ const logo = {
   width: "250px",
 };
 
-const buttons = {
-  display: "inline",
+const searchBar = {
+  display: "inline-block",
+  marginTop: "25px",
+  marginLeft: "-180px",
+  color: "purple",
+  fontSize: "20px",
 };
 
 const logoutRegister = {
@@ -109,29 +114,30 @@ const HomePage = () => {
           alt="Game Store Logo"
           style={logo}
         ></img>
-        <div style={buttons}>
-          {categories.map(
-            (category, index) => (
-              (categLegnth = category.length),
-              (
-                <Button
-                  key={index}
-                  sx={{
-                    width: 60 + categLegnth * 15 + "px",
-                    height: "50px",
-                    color: "purple",
-                    fontSize: "30px",
-                    marginTop: "15px",
-                    marginLeft: "15px",
-                  }}
-                  variant="text"
-                >
-                  {category}
-                </Button>
-              )
+        <Input placeholder="Search..." style={searchBar} />
+        {categories.map(
+          (category, index) => (
+            (categLegnth = category.length),
+            (
+              <Button
+                key={index}
+                sx={{
+                  display: "inline-block",
+                  width: 60 + categLegnth * 15 + "px",
+                  height: "50px",
+                  color: "purple",
+                  fontSize: "30px",
+                  marginTop: "-17px",
+                  marginLeft: "15px",
+                }}
+                variant="text"
+                onClick={fetchGames(`SELECT * FROM sortgenre('${category}')`)}
+              >
+                {category}
+              </Button>
             )
-          )}
-        </div>
+          )
+        )}
         <IconButton
           style={logoutRegister}
           href="/login"
@@ -163,42 +169,46 @@ const HomePage = () => {
       </div>
       <div style={products}>
         {isFetching
-          ? "loadingAnimation"
+          ? "Loading products"
           : errorMessage
           ? "error"
           : data && data.length > 0
           ? data.map((game, index) => (
-              <Card
-                key={index}
-                sx={{
-                  width: 350,
-                  height: 420,
-                  display: "inline-block",
-                  position: "relative",
-                  margin: 2,
-                  textAlign: "left",
-                }}
-              >
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="250"
-                    image={require("./stockImg.png")}
-                    alt="game image"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {game.Title}
+              <Grow in={true}>
+                <Card
+                  key={index}
+                  sx={{
+                    width: 350,
+                    height: 420,
+                    display: "inline-block",
+                    position: "relative",
+                    margin: 2,
+                    textAlign: "left",
+                  }}
+                >
+                  <CardActionArea href={game.Link}>
+                    <CardMedia
+                      component="img"
+                      height="250"
+                      image={require("./stockImg.png")}
+                      alt="game image"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {game.Title}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                    <Button style={addButton} onClick={() => addToCart(game)}>
+                      Add to cart
+                    </Button>
+                    <Typography style={price}>
+                      {game.Price > 0 ? game.Price + "$" : "Free"}
                     </Typography>
-                  </CardContent>
-                </CardActionArea>
-                <CardActions>
-                  <Button style={addButton} onClick={() => addToCart(game)}>
-                    Add to cart
-                  </Button>
-                  <Typography style={price}>20$</Typography>
-                </CardActions>
-              </Card>
+                  </CardActions>
+                </Card>
+              </Grow>
             ))
           : "no games found"}
       </div>

@@ -1,26 +1,54 @@
 import React from "react";
-import { Button, Paper, TextField } from "@mui/material";
+import { Button, Paper } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 
 const product = {
   display: "block",
+  position: "relative",
   textAlign: "left",
   paddingLeft: "40px",
   marginTop: "20px",
 };
 
-const gameName = {
-  display: "inlineBlock",
-  fontWeight: "bold",
-  fontSize: "larger",
-  width: "30%",
+const gameImg = {
+  display: "inline-block",
+  marginLeft: "-15px",
+  width: "25%",
+  minWidth: "150px",
 };
 
-const priceRemove = {
-  display: "inlineBlock",
-  minWidth: "41.385%",
+const gameName = {
+  display: "inline-block",
+  fontWeight: "bold",
+  fontSize: "5vmin",
+  marginLeft: "20px",
+  marginTop: "30px",
+  width: "90%",
+};
+
+const gamePrice = {
+  display: "flex",
+  position: "absolute",
+  right: "35px",
+  top: "90px",
+  fontSize: "2vmax",
+};
+
+const removeButton = {
+  display: "flex",
+  position: "absolute",
+  right: "30px",
+  top: "20px",
+  color: "red",
+  borderColor: "red",
+};
+
+const buyButton = {
+  minWidth: "420px",
+  width: "60%",
+  height: "50px",
+  marginTop: "40px",
 };
 
 const CartPage = () => {
@@ -40,78 +68,25 @@ const CartPage = () => {
 
         <div style={product}>
           <img
-            src="../stockImg.png"
+            src={require("./stockImg.png")}
             alt="Game_Image"
-            style={{ marginLeft: "30px", display: "inline-block" }}
+            style={gameImg}
           ></img>
-          <p style={gameName}>Game name</p>
-          <div style={priceRemove}>
-            <p style={{ display: "inline-block" }}>20$</p>
-            <Button
-              sx={{
-                float: "right",
-                marginRight: "20px",
-                color: "red",
-              }}
-              startIcon={<DeleteIcon />}
-            >
-              Remove product
-            </Button>
-          </div>
+          <p style={gamePrice}>20$</p>
+          <Button
+            variant="outlined"
+            style={removeButton}
+            startIcon={<DeleteIcon />}
+          >
+            Remove product
+          </Button>
+          <p style={gameName}>Game name that is much longer than before</p>
         </div>
       </Paper>
 
-      <Paper
-        elevation={3}
-        sx={{
-          width: "420px",
-          display: "inline-block",
-          textAlign: "left",
-          padding: "40px",
-          marginTop: "40px",
-        }}
-      >
-        <h2 style={{ marginLeft: "20px" }}>Payment details</h2>
-        <TextField id="input-email" label="E-mail" variant="outlined" />
-        <br></br>
-        <h4>Card data</h4>
-        <TextField
-          id="input-number"
-          label="Primary Account Number"
-          variant="outlined"
-        />
-        <TextField id="input-exp" label="Expiration date" variant="outlined" />
-
-        <TextField
-          id="input-cvc"
-          label="CVC"
-          variant="outlined"
-          sx={{ marginTop: "20px" }}
-        />
-        <TextField
-          id="input-name"
-          label="Cardholder name"
-          variant="outlined"
-          sx={{ marginTop: "20px" }}
-        />
-
-        <TextField
-          id="input-region"
-          label="Country/Region"
-          variant="outlined"
-          sx={{ marginTop: "20px" }}
-        />
-        <Button
-          variant="outlined"
-          sx={{
-            width: "100%",
-            height: "50px",
-            marginTop: "40px",
-          }}
-        >
-          Pay
-        </Button>
-      </Paper>
+      <Button variant="contained" style={buyButton}>
+        Pay
+      </Button>
 
       <Button
         href="/"
