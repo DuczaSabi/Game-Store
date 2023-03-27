@@ -29,7 +29,6 @@ export function fetchGames() {
     try {
       dispatch(fetchGamesStart());
 
-      console.log("jo nagy barmi");
       const games = await axios.get("http://localhost:3001/api/games");
       console.log("GAMESAXIOS", games.data);
 
