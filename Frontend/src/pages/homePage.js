@@ -88,7 +88,7 @@ const HomePage = () => {
     dispatch(fetchGames());
   }, []);
 
-  const [cartItemsNumber, setCartItemsNumber] = useState(JSON.parse(sessionStorage.getItem("cart")).length || 0)
+  const [cartItemsNumber, setCartItemsNumber] = useState(sessionStorage.getItem("cart") ? JSON.parse(sessionStorage.getItem("cart")).length : 0)
 
   const gameState = useSelector((state) => state.games);
   const { data, isFetching, errorMessage } = gameState;
