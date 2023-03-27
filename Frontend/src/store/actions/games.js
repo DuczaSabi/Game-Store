@@ -24,12 +24,12 @@ export function fetchGamesFail (errorMessage) {
   };
 }
 
-export function fetchGames () {
+export function fetchGames (category, search) {
   return async (dispatch) => {
     try {
       dispatch(fetchGamesStart());
 
-      const games = await axios.get("http://localhost:3001/api/games");
+      const games = await axios.get(`http://localhost:3001/api/games`, { params: { category, search } });
 
       dispatch(fetchGamesSuccess(games.data));
     } catch (error) {
