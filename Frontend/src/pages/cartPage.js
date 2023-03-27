@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Paper } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
@@ -52,53 +52,65 @@ const buyButton = {
 };
 
 const CartPage = () => {
+
+  const [cartItems, setCartItems] = useState(sessionStorage.getItem("cart") ? JSON.parse(sessionStorage.getItem("cart")) : null)
+
+  console.log(cartItems)
   return (
     <>
       <Paper
-        elevation={1}
-        sx={{
+        elevation={ 1 }
+        sx={ {
           minWidth: "420px",
           width: "60%",
           display: "inline-block",
           margin: "40px",
-        }}
+        } }
       >
-        <h1 style={{ textAlign: "left", marginLeft: "45px" }}>My cart</h1>
+        <h1 style={ { textAlign: "left", marginLeft: "45px" } }>My cart</h1>
         <hr></hr>
 
-        <div style={product}>
-          <img
-            src={require("./stockImg.png")}
-            alt="Game_Image"
-            style={gameImg}
-          ></img>
-          <p style={gamePrice}>20$</p>
-          <Button
-            variant="outlined"
-            style={removeButton}
-            startIcon={<DeleteIcon />}
-          >
-            Remove product
-          </Button>
-          <p style={gameName}>Game name that is much longer than before</p>
-        </div>
+        {
+          cartItems && cartItems.length > 0 ?
+            cartItems.map((item, index) => (
+              <div key={ index } style={ product }>
+                <img
+                  src={ require("./stockImg.png") }
+                  alt="Game_Image"
+                  style={ gameImg }
+                ></img>
+                <p style={ gamePrice }>20$</p>
+                <Button
+                  variant="outlined"
+                  style={ removeButton }
+                  startIcon={ <DeleteIcon /> }
+                >
+                  Remove product
+                </Button>
+                <p style={ gameName }>{ item.Title }</p>
+              </div>
+            ))
+            :
+            "Still empty... Go get some games"
+        }
+
       </Paper>
 
-      <Button variant="contained" style={buyButton}>
+      <Button variant="contained" style={ buyButton }>
         Pay
       </Button>
 
       <Button
         href="/"
-        sx={{
+        sx={ {
           color: "white",
           borderColor: "white",
           fontSize: "20px",
           position: "fixed",
           bottom: "60px",
           right: "80px",
-        }}
-        startIcon={<ArrowBackIos />}
+        } }
+        startIcon={ <ArrowBackIos /> }
       >
         Leave cart
       </Button>
