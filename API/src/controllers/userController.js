@@ -21,8 +21,7 @@ const signIn = async (req, res) => {
 
       res.status(200).json({ email, name: user.rows[0].Name, token });
     }
-
-    res.status(401).send("Invalid Credentials");
+    else res.status(401).send("Invalid Credentials");
 
   } catch (error) {
     console.log(error)
