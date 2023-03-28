@@ -6,25 +6,27 @@ import SignInPage from "./pages/signInPage";
 import CartPage from "./pages/cartPage";
 import history from "./utils/history";
 import PaymentSucess from "./pages/paymentSuccess";
+import ProtectedRoute from "./components/ProtectedRoute"
 
 function App () {
   return (
     <Router history={ history }>
       <Switch>
-        <Route path="/" exact>
-          <HomePage />
-        </Route>
+
         <Route path="/login" exact>
           <LoginPage />
         </Route>
         <Route path="/signin" exact>
           <SignInPage />
         </Route>
+        <Route path="/" exact>
+          <ProtectedRoute path="/" component={ HomePage }></ProtectedRoute>
+        </Route>
         <Route path="/cart" exact>
-          <CartPage />
+          <ProtectedRoute path="/cart" component={ CartPage }></ProtectedRoute>
         </Route>
         <Route path="/payment/success" exact>
-          <PaymentSucess />
+          <ProtectedRoute path="/payment/success" component={ PaymentSucess }></ProtectedRoute>
         </Route>
       </Switch>
     </Router>

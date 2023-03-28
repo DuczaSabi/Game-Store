@@ -153,6 +153,7 @@ const HomePage = () => {
         ) }
         <IconButton
           style={ logoutRegister }
+          onClick={ () => { localStorage.removeItem("token") } }
           href="/login"
           sx={ { color: "purple", marginTop: "10px", marginRight: "20px" } }
         >
