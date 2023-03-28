@@ -6,31 +6,30 @@ import {
 
 import axios from "axios";
 
-export function fetchGamesStart() {
+export function fetchGamesStart () {
   return { type: FETCH_GAMES_START };
 }
 
-export function fetchGamesSuccess(games) {
+export function fetchGamesSuccess (games) {
   return {
     type: FETCH_GAMES_SUCCESS,
     payload: games,
   };
 }
 
-export function fetchGamesFail(errorMessage) {
+export function fetchGamesFail (errorMessage) {
   return {
     payload: errorMessage,
     type: FETCH_GAMES_FAIL,
   };
 }
 
-export function fetchGames() {
+export function fetchGames (category, search) {
   return async (dispatch) => {
     try {
       dispatch(fetchGamesStart());
 
-      const games = await axios.get("http://localhost:3001/api/games");
-      console.log("GAMESAXIOS", games.data);
+      const games = await axios.get(`http://localhost:3001/api/games`, { params: { category, search } });
 
       dispatch(fetchGamesSuccess(games.data));
     } catch (error) {

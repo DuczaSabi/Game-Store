@@ -5,10 +5,11 @@ import LoginPage from "./pages/loginPage";
 import SignInPage from "./pages/signInPage";
 import CartPage from "./pages/cartPage";
 import history from "./utils/history";
+import PaymentSucess from "./pages/paymentSuccess";
 
-function App() {
+function App () {
   return (
-    <Router history={history}>
+    <Router history={ history }>
       <Switch>
         <Route path="/" exact>
           <HomePage />
@@ -21,6 +22,9 @@ function App() {
         </Route>
         <Route path="/cart" exact>
           <CartPage />
+        </Route>
+        <Route path="/payment/success" exact>
+          <PaymentSucess />
         </Route>
       </Switch>
     </Router>
