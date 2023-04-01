@@ -8,17 +8,31 @@ async function fetchGames (req, res) {
     limit = 20
   }
 
-
   if (search) {
     const result = await client.query(`SELECT * FROM search('${ search }', ${ page }, ${ limit })`);
+    const count = await client.query(`SELECT * FROM search_count('${ search }')`)
+    const returnObj = {
+      page: page,
+      limit: limit,
+      count: count.rows[0].search_count,
+      data: result.rows
+    }
     res.status(200);
-    res.json(result.rows);
+    res.json(returnObj);
   }
   else {
     if (!category) category = 'all'
     const result = await client.query(`SELECT * FROM sortgenre('${ category }', ${ page }, ${ limit })`);
+    const count = await client.query(`SELECT * FROM sortgenre_count('${ category }')`)
+    const returnObj = {
+      page: page,
+      limit: limit,
+      count: count.rows[0].sortgenre_count,
+      data: result.rows
+    }
+    console.log(returnObj)
     res.status(200);
-    res.json(result.rows);
+    res.json(returnObj);
   }
 }
 
