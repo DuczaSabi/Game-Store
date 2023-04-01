@@ -30,7 +30,6 @@ async function fetchGames (req, res) {
       count: count.rows[0].sortgenre_count,
       data: result.rows
     }
-    console.log(returnObj)
     res.status(200);
     res.json(returnObj);
   }
