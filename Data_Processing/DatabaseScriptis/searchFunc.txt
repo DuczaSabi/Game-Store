@@ -1,0 +1,37 @@
+-- FUNCTION: public.search(character varying, integer, integer)
+
+-- DROP FUNCTION IF EXISTS public.search(character varying, integer, integer);
+
+CREATE OR REPLACE FUNCTION public.search(
+	wantedtitle character varying,
+	pagenumber integer,
+	pagelimit integer)
+    RETURNS SETOF "Game" 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+
+BEGIN
+    RETURN QUERY
+        SELECT *
+        FROM "Game"
+        WHERE "Game"."Title" LIKE '%'||wantedTitle||'%'
+		ORDER BY "Game"."Id"
+		LIMIT(pageLimit)
+		OFFSET((pageNumber -1) * pageLimit);
+		
+END 
+$BODY$;
+
+ALTER FUNCTION public.search(character varying, integer, integer)
+    OWNER TO postgres;
+	
+-- USAGE
+SELECT public.search(
+	<wantedtitle character varying>, 
+	<pagenumber integer>, 
+	<pagelimit integer>
+)

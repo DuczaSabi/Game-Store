@@ -1,0 +1,45 @@
+-- FUNCTION: public.sortgenre(character varying, integer, integer)
+
+-- DROP FUNCTION IF EXISTS public.sortgenre(character varying, integer, integer);
+
+CREATE OR REPLACE FUNCTION public.sortgenre(
+	wantedgenre character varying,
+	pagenumber integer,
+	pagelimit integer)
+    RETURNS SETOF "Game" 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+
+BEGIN
+	IF wantedGenre LIKE'all' THEN
+	RETURN QUERY
+        SELECT *
+        FROM "Game"
+        ORDER BY "Game"."Id"
+		LIMIT(pageLimit)
+		OFFSET((pageNumber -1) * pageLimit);
+	ELSE
+    RETURN QUERY
+        SELECT *
+        FROM "Game"
+        WHERE "Game"."Genre" LIKE '%'||wantedGenre||'%'
+		ORDER BY "Game"."Id"
+		LIMIT(pageLimit)
+		OFFSET((pageNumber -1) * pageLimit);
+	END IF;
+END 
+$BODY$;
+
+ALTER FUNCTION public.sortgenre(character varying, integer, integer)
+    OWNER TO postgres;
+
+--USAGE
+SELECT public.sortgenre(
+	<wantedgenre character varying>, 
+	<pagenumber integer>, 
+	<pagelimit integer>
+)
