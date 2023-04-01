@@ -1,0 +1,21 @@
+-- FUNCTION: public.search_count(character varying)
+
+-- DROP FUNCTION IF EXISTS public.search_count(character varying);
+
+CREATE OR REPLACE FUNCTION public.search_count(
+	wantedtitle character varying)
+    RETURNS SETOF bigint 
+    LANGUAGE 'plpgsql'
+    COST 100
+    VOLATILE PARALLEL UNSAFE
+    ROWS 1000
+
+AS $BODY$
+
+BEGIN
+    RETURN QUERY
+		SELECT COUNT("Id")
+        FROM "Game"
+        WHERE "Game"."Title" LIKE '%'||wantedTitle||'%';
+END 
+$BODY$;

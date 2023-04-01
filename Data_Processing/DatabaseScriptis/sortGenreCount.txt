@@ -1,0 +1,34 @@
+-- FUNCTION: public.search_count(character varying)
+
+-- DROP FUNCTION IF EXISTS public.search_count(character varying);
+
+CREATE OR REPLACE FUNCTION public.sortgenre_count(
+    wantedgenre character varying)
+    RETURNS SETOF bigint 
+    LANGUAGE 'plpgsql'
+
+AS $BODY$
+
+BEGIN
+    IF wantedGenre LIKE'all' THEN
+    RETURN QUERY
+        SELECT COUNT()
+        FROM "Game";
+    ELSEIF wantedGenre LIKE 'Free' THEN
+    RETURN QUERY
+        SELECT COUNT()
+        FROM "Game"
+        WHERE "Game"."Price" = 0;
+    ELSEIF wantedGenre LIKE 'New' THEN
+    RETURN QUERY
+        SELECT COUNT()
+        FROM "Game"
+        WHERE "ReleaseDate" >= CURRENT_DATE - INTERVAL '24 months';
+    ELSE
+    RETURN QUERY
+        SELECT COUNT()
+        FROM "Game"
+        WHERE "Game"."Genre" LIKE '%'||wantedGenre||'%';
+    END IF;
+END 
+$BODY$;
