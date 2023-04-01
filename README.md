@@ -11,5 +11,4 @@ TODO:
 - termékek ár szerinti vásárlása
 - a megvásárolt termékről visszajelzést kapni
 - berakni pár képet hogy legalább az első adatokon látszódjon hogy hogy nézne ki
-- írni egy fullos dokumentációt
-- és nekem teljesen megértenem mindent amit eddig csináltunk
+- auth token validalás front-enden és back-enden token based access
