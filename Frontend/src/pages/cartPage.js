@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Paper } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
-import { loadStripe } from '@stripe/stripe-js'
+import { loadStripe } from "@stripe/stripe-js";
 
 const product = {
   display: "block",
@@ -53,87 +53,92 @@ const buyButton = {
 };
 
 const CartPage = () => {
-  const [cartItems, setCartItems] = useState(sessionStorage.getItem("cart") ? JSON.parse(sessionStorage.getItem("cart")) : null)
+  const [cartItems, setCartItems] = useState(
+    sessionStorage.getItem("cart")
+      ? JSON.parse(sessionStorage.getItem("cart"))
+      : null
+  );
 
   const removeProduct = (game) => {
-    let cartData = JSON.parse(sessionStorage.getItem("cart"))
-    cartData.splice(cartData.indexOf(game), 1)
+    let cartData = JSON.parse(sessionStorage.getItem("cart"));
+    cartData.splice(cartData.indexOf(game), 1);
     sessionStorage.setItem("cart", JSON.stringify(cartData));
-    setCartItems(cartData)
-  }
+    setCartItems(cartData);
+  };
 
   const handlePay = async () => {
-    const stripe = await loadStripe('pk_test_51MpwdCE4gyMcPkzaOqtM4zF14Z3N2RyQ2ZLBDEzlBhSPQi0HqgD9IiyDsyx1NEzHOoHi6pvJ6VYOuWATOkx6XwI0003wFy5E9a');
+    const stripe = await loadStripe(
+      "pk_test_51MpwdCE4gyMcPkzaOqtM4zF14Z3N2RyQ2ZLBDEzlBhSPQi0HqgD9IiyDsyx1NEzHOoHi6pvJ6VYOuWATOkx6XwI0003wFy5E9a"
+    );
     const { error } = await stripe.redirectToCheckout({
-      lineItems: [{
-        price: "price_1MqLkDE4gyMcPkzaL2oHorQ9",
-        quantity: sessionStorage.getItem("cart") ? JSON.parse(sessionStorage.getItem("cart")).length : 0,
-      }],
+      lineItems: [
+        {
+          price: "price_1MqLkDE4gyMcPkzaL2oHorQ9",
+          quantity: sessionStorage.getItem("cart")
+            ? JSON.parse(sessionStorage.getItem("cart")).length
+            : 0,
+        },
+      ],
       mode: "payment",
-      successUrl: `${ window.location.origin }/payment/success`,
-      cancelUrl: `${ window.location.origin }`,
-      // customerEmail: 
-    })
-    if (error) console.log(error)
-  }
+      successUrl: `${window.location.origin}/payment/success`,
+      cancelUrl: `${window.location.origin}`,
+      // customerEmail:
+    });
+    if (error) console.log(error);
+  };
 
-  console.log(cartItems)
   return (
     <>
       <Paper
-        elevation={ 1 }
-        sx={ {
+        elevation={1}
+        sx={{
           minWidth: "420px",
           width: "60%",
           display: "inline-block",
           margin: "40px",
-        } }
+        }}
       >
-        <h1 style={ { textAlign: "left", marginLeft: "45px" } }>My cart</h1>
+        <h1 style={{ textAlign: "left", marginLeft: "45px" }}>My cart</h1>
         <hr></hr>
 
-        {
-          cartItems && cartItems.length > 0 ?
-            cartItems.map((item, index) => (
-              <div key={ index } style={ product }>
+        {cartItems && cartItems.length > 0
+          ? cartItems.map((item, index) => (
+              <div key={index} style={product}>
                 <img
-                  src={ require("./stockImg.png") }
+                  src={require("./stockImg.png")}
                   alt="Game_Image"
-                  style={ gameImg }
+                  style={gameImg}
                 ></img>
-                <p style={ gamePrice }>20$</p>
+                <p style={gamePrice}>20$</p>
                 <Button
-                  onClick={ () => removeProduct(item) }
+                  onClick={() => removeProduct(item)}
                   variant="outlined"
-                  style={ removeButton }
-                  startIcon={ <DeleteIcon /> }
+                  style={removeButton}
+                  startIcon={<DeleteIcon />}
                 >
                   Remove product
                 </Button>
-                <p style={ gameName }>{ item.Title }</p>
+                <p style={gameName}>{item.Title}</p>
               </div>
             ))
-            :
-            "Still empty... Go get some games"
-        }
-
+          : "Still empty... Go get some games"}
       </Paper>
 
-      <Button variant="contained" style={ buyButton } onClick={ handlePay }>
+      <Button variant="contained" style={buyButton} onClick={handlePay}>
         Pay
       </Button>
 
       <Button
         href="/"
-        sx={ {
+        sx={{
           color: "white",
           borderColor: "white",
           fontSize: "20px",
           position: "fixed",
           bottom: "60px",
           right: "80px",
-        } }
-        startIcon={ <ArrowBackIos /> }
+        }}
+        startIcon={<ArrowBackIos />}
       >
         Leave cart
       </Button>
