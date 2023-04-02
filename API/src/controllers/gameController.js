@@ -40,4 +40,28 @@ async function fetchGames(req, res) {
   }
 }
 
-module.exports = { fetchGames };
+async function modifyGame(req, res) {
+  //Todo
+  /*
+  - find game
+  - update game
+  */
+  let { Id, Title, Image, Genre, Link, Price } = req.body;
+
+  if (Id) {
+    const result = await client.query(
+      `SELECT updategame(${Id}, '${Title}', '${Image}', '${Genre}', '${Link}', ${Price})`
+    );
+    if (result) {
+      res.status(200);
+      res.send("Update successful!");
+    } else {
+      res.status(400);
+      res.send("Update failed");
+    }
+  } else {
+    res.status(404).send("Id required!");
+  }
+}
+
+module.exports = { fetchGames, modifyGame };

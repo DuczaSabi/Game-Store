@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { fetchGames } from "../store/actions/games.js";
+import { modifyGame } from "../store/actions/modifyGame.js";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -58,13 +59,14 @@ const paperNew = {
 };
 
 const AdminPage = () => {
-  let alertSeverity;
-  let alertText;
-
   const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const [open, setOpen] = React.useState(false);
+  const [alertText, setAlertText] = React.useState("");
+  const [alertSeverity, setAlertSeverity] = React.useState("");
+  const [titleInput, setTitleInput] = React.useState("");
+  const [selectedGame, setSelectedGame] = React.useState(null);
 
   const handleClick = () => {
     setOpen(true);
@@ -79,28 +81,33 @@ const AdminPage = () => {
 
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchGames("all", null));
-  }, []);
+    dispatch(fetchGames("all", titleInput, 1, 20));
+  }, [titleInput, dispatch]);
 
   function deleteButtonClick() {
-    alertSeverity = "error";
-    alertText = "Product successfully deleted from database!";
-    console.log(alertSeverity + " " + alertText);
+    setAlertSeverity("error");
+    setAlertText("Product successfully deleted from database!");
     handleClick();
   }
 
   function modifyButtonClick() {
-    alertSeverity = "info";
-    alertText = "Product data successfully modified!";
-    console.log(alertSeverity + " " + alertText);
+    dispatch(modifyGame(selectedGame));
+    console.log(selectedGame);
+    setAlertSeverity("info");
+    setAlertText("Product data successfully modified!");
     handleClick();
   }
 
   function addButtonClick() {
-    alertSeverity = "success";
-    alertText = "Product successfully added to database!";
-    console.log(alertSeverity + " " + alertText);
+    setAlertSeverity("success");
+    setAlertText("Product successfully added to database!");
     handleClick();
+  }
+
+  function selectGame(title) {
+    const searchedGame = data.data.find((game) => game.Title === title);
+    console.log(searchedGame);
+    setSelectedGame(searchedGame);
   }
 
   const gameState = useSelector((state) => state.games);
@@ -108,19 +115,12 @@ const AdminPage = () => {
 
   const gameTitles = [];
   if (isFetching) {
-    console.log("Loading products");
   } else if (errorMessage) {
     console.log("error");
-  } else if (data && data.length > 0) {
-    data.map((game, index) => gameTitles.push(game.Title));
+  } else if (data && data.data.length > 0) {
+    data.data.map((game, index) => gameTitles.push(game.Title));
   } else {
     console.log("");
-  }
-
-  let gameTitle = "";
-
-  function gameSelected() {
-    gameTitle = "asd";
   }
 
   return (
@@ -130,10 +130,12 @@ const AdminPage = () => {
         <Autocomplete
           disablePortal
           id="combo-box-demo"
-          onSelect={gameSelected}
           options={gameTitles}
+          onChange={(e, newValue) => selectGame(newValue)}
           sx={{ width: "98%" }}
           renderInput={(params) => <TextField {...params} label="Games" />}
+          onInputChange={(event, newValue) => setTitleInput(newValue)}
+          inputValue={titleInput}
         />
         <Button
           size="large"
@@ -152,30 +154,50 @@ const AdminPage = () => {
           label="Title"
           variant="standard"
           style={inputField}
+          value={(selectedGame && selectedGame.Title) ?? ""}
+          onChange={(e) =>
+            setSelectedGame({ ...selectedGame, Title: e.target.value })
+          }
         />
         <TextField
           id="input-modified-img"
           label="Image url"
           variant="standard"
           style={inputField}
+          value={(selectedGame && selectedGame.Image) ?? ""}
+          onChange={(e) =>
+            setSelectedGame({ ...selectedGame, Image: e.target.value })
+          }
         />
         <TextField
           id="input-modified-genre"
           label="Genre"
           variant="standard"
           style={inputField}
+          value={(selectedGame && selectedGame.Genre) ?? ""}
+          onChange={(e) =>
+            setSelectedGame({ ...selectedGame, Genre: e.target.value })
+          }
         />
         <TextField
           id="input-modified-ref"
           label="Reference url"
           variant="standard"
           style={inputField}
+          value={(selectedGame && selectedGame.Link) ?? ""}
+          onChange={(e) =>
+            setSelectedGame({ ...selectedGame, Link: e.target.value })
+          }
         />
         <TextField
           id="input-modified-price"
           label="Price"
           variant="standard"
           style={inputField}
+          value={(selectedGame && selectedGame.Price) ?? ""}
+          onChange={(e) =>
+            setSelectedGame({ ...selectedGame, Price: e.target.value })
+          }
         />
         <Button
           size="large"
