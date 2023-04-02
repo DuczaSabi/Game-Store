@@ -149,31 +149,31 @@ const AdminPage = () => {
         <h1 style={title}>Modifications</h1>
         <TextField
           id="input-modified-title"
-          label="Game title"
+          label="Title"
           variant="standard"
           style={inputField}
         />
         <TextField
           id="input-modified-img"
-          label="Game image url"
+          label="Image url"
           variant="standard"
           style={inputField}
         />
         <TextField
           id="input-modified-genre"
-          label="Game genre"
+          label="Genre"
           variant="standard"
           style={inputField}
         />
         <TextField
           id="input-modified-ref"
-          label="Game reference url"
+          label="Reference url"
           variant="standard"
           style={inputField}
         />
         <TextField
           id="input-modified-price"
-          label="Game price"
+          label="Price"
           variant="standard"
           style={inputField}
         />
@@ -192,37 +192,37 @@ const AdminPage = () => {
         <h1>Add new product</h1>
         <TextField
           id="input-new-title"
-          label="Game title"
+          label="Title"
           variant="standard"
           style={inputField}
         />
         <TextField
           id="input-new-img"
-          label="Game image url"
+          label="Image url"
           variant="standard"
           style={inputField}
         />
         <TextField
           id="input-new-genre"
-          label="Game genre"
+          label="Genre"
           variant="standard"
           style={inputField}
         />
         <TextField
           id="input-new-date"
-          label="Game release date"
+          label="Release date"
           variant="standard"
           style={inputField}
         />
         <TextField
           id="input-new-ref"
-          label="Game reference url"
+          label="Reference url"
           variant="standard"
           style={inputField}
         />
         <TextField
           id="input-new-price"
-          label="Game price"
+          label="Price"
           variant="standard"
           style={inputField}
         />

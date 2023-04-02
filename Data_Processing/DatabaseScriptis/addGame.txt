@@ -1,0 +1,14 @@
+-- FUNCTION: public.addgame(character varying, character varying, character varying, date, character varying, integer)
+
+-- DROP FUNCTION IF EXISTS public.addgame(character varying, character varying, character varying, date, character varying, integer);
+
+CREATE OR REPLACE FUNCTION public.addgame(title CHARACTER VARYING, image CHARACTER VARYING, genre CHARACTER VARYING, reldate DATE, refurl CHARACTER VARYING, price INTEGER)
+RETURNS SETOF "Game"
+LANGUAGE 'plpgsql'
+AS $$
+		
+BEGIN
+	RETURN QUERY
+		INSERT INTO "Game"("Title", "Image", "Genre", "ReleaseDate", "Link", "Price")
+		VALUES (title, image, genre, reldate, refurl, price);
+END $$ ;
