@@ -48,7 +48,7 @@ const logo = {
 const searchBar = {
   display: "inline-block",
   marginTop: "25px",
-  marginLeft: "-180px",
+  marginLeft: "-100px",
   color: "purple",
   fontSize: "20px",
 };
@@ -94,12 +94,20 @@ const products = {};
 
 const HomePage = () => {
   const dispatch = useDispatch();
-  const categories = ["New", "Free", "Sport", "Shooter", "Horror", "Strategy", "all"];
+  const categories = [
+    "New",
+    "Free",
+    "Sport",
+    "Shooter",
+    "Horror",
+    "Strategy",
+    "all",
+  ];
   let categLegnth = 0;
 
-  const [category, setCategory] = useState("all")
-  const [searchKey, setSearchKey] = useState("")
-  const [page, setPage] = useState(1)
+  const [category, setCategory] = useState("all");
+  const [searchKey, setSearchKey] = useState("");
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     dispatch(fetchGames(category, searchKey, page, 20));
@@ -115,7 +123,7 @@ const HomePage = () => {
   const gameState = useSelector((state) => state.games);
   const { data, isFetching, errorMessage } = gameState;
 
-  function addToCart (game) {
+  function addToCart(game) {
     let data = sessionStorage.getItem("cart");
 
     if (data === null) data = [];
@@ -127,19 +135,19 @@ const HomePage = () => {
     setCartItemsNumber(cartItemsNumber + 1);
   }
 
-  function handleCategoryClick (category) {
-    setSearchKey("")
-    setPage(1)
-    setCategory(category)
+  function handleCategoryClick(category) {
+    setSearchKey("");
+    setPage(1);
+    setCategory(category);
   }
 
-  function handleSeach (search) {
-    setPage(1)
-    setSearchKey(search)
+  function handleSeach(search) {
+    setPage(1);
+    setSearchKey(search);
   }
 
-  function handlePageChange (e, pageNo) {
-    setPage(pageNo)
+  function handlePageChange(e, pageNo) {
+    setPage(pageNo);
   }
 
   const debounce_fun = _.debounce(function (search) {
@@ -148,26 +156,26 @@ const HomePage = () => {
 
   return (
     <>
-      <div style={ header }>
+      <div style={header}>
         <img
-          src={ require("./gameStoreLogo.webp") }
+          src={require("./gameStoreLogo.webp")}
           alt="Game Store Logo"
-          style={ logo }
+          style={logo}
         ></img>
         <Input
           placeholder="Search..."
-          style={ searchBar }
-          onChange={ (e) => {
+          style={searchBar}
+          onChange={(e) => {
             debounce_fun(e.target.value);
-          } }
+          }}
         />
-        { categories.map(
+        {categories.map(
           (category, index) => (
             (categLegnth = category.length),
             (
               <Button
-                key={ index }
-                sx={ {
+                key={index}
+                sx={{
                   display: "inline-block",
                   width: 60 + categLegnth * 15 + "px",
                   height: "50px",
@@ -175,111 +183,122 @@ const HomePage = () => {
                   fontSize: "30px",
                   marginTop: "-17px",
                   marginLeft: "15px",
-                } }
+                }}
                 variant="text"
-                onClick={ () => handleCategoryClick(category) }
+                onClick={() => handleCategoryClick(category)}
               >
-                { category }
+                {category}
               </Button>
             )
           )
-        ) }
+        )}
         <IconButton
-          style={ logoutRegister }
-          onClick={ () => {
+          style={logoutRegister}
+          onClick={() => {
             localStorage.removeItem("token");
-          } }
+          }}
           href="/login"
-          sx={ { color: "purple", marginTop: "10px", marginRight: "20px" } }
+          sx={{ color: "purple", marginTop: "10px", marginRight: "20px" }}
         >
           <LogoutIcon
-            sx={ {
+            sx={{
               width: "50px",
               height: "50px",
-            } }
+            }}
           ></LogoutIcon>
         </IconButton>
 
         <IconButton
-          style={ cart }
+          style={cart}
           href="/cart"
           aria-label="cart"
-          sx={ { color: "purple", marginTop: "10px", marginRight: "20px" } }
+          sx={{ color: "purple", marginTop: "10px", marginRight: "20px" }}
         >
-          <StyledBadge badgeContent={ cartItemsNumber } color="secondary">
+          <StyledBadge badgeContent={cartItemsNumber} color="secondary">
             <ShoppingCartIcon
-              sx={ {
+              sx={{
                 width: "50px",
                 height: "50px",
-              } }
+              }}
             ></ShoppingCartIcon>
           </StyledBadge>
         </IconButton>
       </div>
-      <div style={ products }>
-        { isFetching
+      <div style={products}>
+        {isFetching
           ? "Loading products"
           : errorMessage
-            ? "error"
-            : data && data.data.length > 0
-              ? data.data.map((game, index) => (
-                <Grow in={ true }>
-                  <Card
-                    key={ index }
-                    sx={ {
-                      width: 350,
-                      height: 420,
-                      display: "inline-block",
-                      position: "relative",
-                      margin: 2,
-                      textAlign: "left",
-                    } }
-                  >
-                    <CardActionArea href={ game.Link } target="_blank">
-                      <CardMedia
-                        component="img"
-                        height="250"
-                        image={ require("./stockImg.png") }
-                        alt="game image"
-                      />
-                      <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          { game.Title }
-                        </Typography>
-                        <Typography gutterBottom variant="h7" component="div">
-                          { game.Genre }
-                        </Typography>
-                      </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                      <Button style={ addButton } onClick={ () => addToCart(game) }>
-                        Add to cart
-                      </Button>
-                      <Typography style={ price }>
-                        { game.Price > 0 ? game.Price + "$" : "Free" }
+          ? "error"
+          : data && data.data.length > 0
+          ? data.data.map((game, index) => (
+              <Grow in={true}>
+                <Card
+                  key={index}
+                  sx={{
+                    width: 350,
+                    height: 500,
+                    display: "inline-block",
+                    position: "relative",
+                    margin: 2,
+                    textAlign: "left",
+                  }}
+                >
+                  <CardActionArea href={game.Link} target="_blank">
+                    <CardMedia
+                      component="img"
+                      height="350"
+                      image={
+                        game.Image != "kep"
+                          ? game.Image
+                          : require("./stockImg.png")
+                      }
+                      alt="game image"
+                    />
+                    <CardContent>
+                      <Typography
+                        gutterBottom
+                        variant="h5"
+                        component="div"
+                        sx={{ lineHeight: "20px", textOverflow: "ellipsis" }}
+                      >
+                        {game.Title}
                       </Typography>
-                    </CardActions>
-                  </Card>
-                </Grow>
-              ))
-              : "no games found" }
+                      <Typography gutterBottom variant="h7" component="div">
+                        {game.Genre}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                  <CardActions>
+                    <Button style={addButton} onClick={() => addToCart(game)}>
+                      Add to cart
+                    </Button>
+                    <Typography style={price}>
+                      {game.Price > 0 ? game.Price + "$" : "Free"}
+                    </Typography>
+                  </CardActions>
+                </Card>
+              </Grow>
+            ))
+          : "no games found"}
       </div>
       <Container
         maxWidth="sm"
-        sx={ {
+        sx={{
           direction: "column",
           alignItems: "center",
           justifyContent: "center",
-        } }
+        }}
       >
         <Pagination
-          count={ Math.ceil(data.count / data.limit) || 1 }
+          count={Math.ceil(data.count / data.limit) || 1}
           variant="outlined"
           color="secondary"
           size="large"
-          style={ pagination }
-          page={ page }
-          onChange={ (e, pageNo) => { handlePageChange(e, pageNo) } }
+          style={pagination}
+          page={page}
+          onChange={(e, pageNo) => {
+            handlePageChange(e, pageNo);
+          }}
         />
       </Container>
     </>
