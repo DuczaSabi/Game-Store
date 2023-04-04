@@ -41,11 +41,6 @@ async function fetchGames(req, res) {
 }
 
 async function modifyGame(req, res) {
-  //Todo
-  /*
-  - find game
-  - update game
-  */
   let { Id, Title, Image, Genre, Link, Price } = req.body;
 
   if (Id) {
@@ -64,4 +59,43 @@ async function modifyGame(req, res) {
   }
 }
 
-module.exports = { fetchGames, modifyGame };
+async function addGame(req, res) {
+  let { Title, Image, Genre, ReleaseDate, Link, Price } = req.body;
+
+  if (Title || Image || Genre || ReleaseDate || Link || Price) {
+    const result = await client.query(
+      `INSERT INTO "Game"("Title", "Image", "Genre", "ReleaseDate", "Link", "Price")
+		VALUES ('${Title}', '${Image}', '${Genre}', to_date(${ReleaseDate}::text, 'YYYYMMDD'), '${Link}', ${Price})`
+    );
+    if (result) {
+      res.status(200);
+      res.send("Game added successfully!");
+    } else {
+      res.status(400);
+      res.send("Failed to add game!");
+    }
+  } else {
+    res.status(404).send("All fields required!");
+  }
+}
+
+async function deleteGame(req, res) {
+  let Data = req.body;
+
+  if (Data) {
+    const result = await client.query(
+      `DELETE FROM "Game" WHERE "Title" = '${Data}'`
+    );
+    if (result) {
+      res.status(200);
+      res.send("Delete successful!");
+    } else {
+      res.status(400);
+      res.send("Delete failed");
+    }
+  } else {
+    res.status(404).send("Id required!");
+  }
+}
+
+module.exports = { fetchGames, modifyGame, addGame, deleteGame };

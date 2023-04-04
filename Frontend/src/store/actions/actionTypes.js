@@ -17,3 +17,13 @@ export const SIGN_UP_FAIL = "SIGN_UP_FAIL";
 export const MODIFY_GAME_START = "MODIFY_GAME_START";
 export const MODIFY_GAME_SUCCESS = "MODIFY_GAME_SUCCESS";
 export const MODIFY_GAME_FAIL = "MODIFY_GAME_FAIL";
+
+//Add game actions
+export const ADD_GAME_START = "ADD_GAME_START";
+export const ADD_GAME_SUCCESS = "ADD_GAME_SUCCESS";
+export const ADD_GAME_FAIL = "ADD_GAME_FAIL";
+
+//Delete game actions
+export const DELETE_GAME_START = "DELETE_GAME_START";
+export const DELETE_GAME_SUCCESS = "DELETE_GAME_SUCCESS";
+export const DELETE_GAME_FAIL = "DELETE_GAME_FAIL";

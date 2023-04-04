@@ -4,6 +4,8 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { fetchGames } from "../store/actions/games.js";
 import { modifyGame } from "../store/actions/modifyGame.js";
+import { deleteGame } from "../store/actions/deleteGame.js";
+import { addGame } from "../store/actions/addGame.js";
 import { useDispatch, useSelector } from "react-redux";
 import React, { useState, useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -68,6 +70,8 @@ const AdminPage = () => {
   const [titleInput, setTitleInput] = React.useState("");
   const [selectedGame, setSelectedGame] = React.useState(null);
 
+  const [addGameData, setAddGameData] = React.useState(null);
+
   const handleClick = () => {
     setOpen(true);
   };
@@ -85,6 +89,7 @@ const AdminPage = () => {
   }, [titleInput, dispatch]);
 
   function deleteButtonClick() {
+    dispatch(deleteGame());
     setAlertSeverity("error");
     setAlertText("Product successfully deleted from database!");
     handleClick();
@@ -92,13 +97,13 @@ const AdminPage = () => {
 
   function modifyButtonClick() {
     dispatch(modifyGame(selectedGame));
-    console.log(selectedGame);
     setAlertSeverity("info");
     setAlertText("Product data successfully modified!");
     handleClick();
   }
 
   function addButtonClick() {
+    dispatch(addGame(addGameData));
     setAlertSeverity("success");
     setAlertText("Product successfully added to database!");
     handleClick();
@@ -217,36 +222,54 @@ const AdminPage = () => {
           label="Title"
           variant="standard"
           style={inputField}
+          onChange={(e) =>
+            setAddGameData({ ...addGameData, Title: e.target.value })
+          }
         />
         <TextField
           id="input-new-img"
           label="Image url"
           variant="standard"
           style={inputField}
+          onChange={(e) =>
+            setAddGameData({ ...addGameData, Image: e.target.value })
+          }
         />
         <TextField
           id="input-new-genre"
           label="Genre"
           variant="standard"
           style={inputField}
+          onChange={(e) =>
+            setAddGameData({ ...addGameData, Genre: e.target.value })
+          }
         />
         <TextField
           id="input-new-date"
           label="Release date"
           variant="standard"
           style={inputField}
+          onChange={(e) =>
+            setAddGameData({ ...addGameData, ReleaseDate: e.target.value })
+          }
         />
         <TextField
           id="input-new-ref"
           label="Reference url"
           variant="standard"
           style={inputField}
+          onChange={(e) =>
+            setAddGameData({ ...addGameData, Link: e.target.value })
+          }
         />
         <TextField
           id="input-new-price"
           label="Price"
           variant="standard"
           style={inputField}
+          onChange={(e) =>
+            setAddGameData({ ...addGameData, Price: e.target.value })
+          }
         />
 
         <Button
