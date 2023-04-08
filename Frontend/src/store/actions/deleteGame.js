@@ -6,32 +6,30 @@ import {
 
 import axios from "axios";
 
-export function deleteGameStart() {
+export function deleteGameStart () {
   return { type: DELETE_GAME_START };
 }
 
-export function deleteGameSuccess(game) {
+export function deleteGameSuccess (game) {
   return {
     type: DELETE_GAME_SUCCESS,
     payload: game,
   };
 }
 
-export function deleteGameFail(errorMessage) {
+export function deleteGameFail (errorMessage) {
   return {
     payload: errorMessage,
     type: DELETE_GAME_FAIL,
   };
 }
 
-export function deleteGame(deleteGameData) {
+export function deleteGame (gameId) {
   return async (dispatch) => {
     try {
       dispatch(deleteGameStart());
 
-      const result = await axios.put(`http://localhost:3001/api/delete`, {
-        deleteGameData,
-      });
+      const result = await axios.delete(`http://localhost:3001/api/games/` + gameId);
 
       dispatch(deleteGameSuccess(result.data));
     } catch (error) {

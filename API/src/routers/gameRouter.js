@@ -8,8 +8,8 @@ const {
 } = require("../controllers/gameController.js");
 
 router.get("/games", fetchGames);
-router.put("/game", modifyGame);
-router.put("/add", addGame);
-router.put("/delete", deleteGame);
+router.put("/games", modifyGame);
+router.post("/games", addGame);
+router.delete("/games/:Id", deleteGame);
 
 module.exports = router;

@@ -6,30 +6,30 @@ import {
 
 import axios from "axios";
 
-export function modifyGameStart() {
+export function modifyGameStart () {
   return { type: MODIFY_GAME_START };
 }
 
-export function modifyGameSuccess(game) {
+export function modifyGameSuccess (game) {
   return {
     type: MODIFY_GAME_SUCCESS,
     payload: game,
   };
 }
 
-export function modifyGameFail(errorMessage) {
+export function modifyGameFail (errorMessage) {
   return {
     payload: errorMessage,
     type: MODIFY_GAME_FAIL,
   };
 }
 
-export function modifyGame(game) {
+export function modifyGame (game) {
   return async (dispatch) => {
     try {
       dispatch(modifyGameStart());
 
-      const result = await axios.put(`http://localhost:3001/api/game`, game);
+      const result = await axios.put(`http://localhost:3001/api/games`, game);
 
       dispatch(modifyGameSuccess(result.data));
     } catch (error) {
