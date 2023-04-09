@@ -1,0 +1,16 @@
+-- Table: public.Orders
+
+-- DROP TABLE IF EXISTS public."Orders";
+
+CREATE TABLE IF NOT EXISTS public."Orders"
+(
+    "OrderId" integer NOT NULL,
+    "UserId" character varying COLLATE pg_catalog."default",
+    "GameId" integer,
+    "Date" date
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Orders"
+    OWNER to postgres;

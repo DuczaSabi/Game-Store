@@ -1,0 +1,17 @@
+-- Table: public.User
+
+-- DROP TABLE IF EXISTS public."User";
+
+CREATE TABLE IF NOT EXISTS public."User"
+(
+    "Name" character varying(20) COLLATE pg_catalog."default" NOT NULL,
+    "Email" character varying COLLATE pg_catalog."default" NOT NULL,
+    "Password" character varying COLLATE pg_catalog."default",
+    "IsAdmin" boolean,
+    CONSTRAINT "User_pkey" PRIMARY KEY ("Email")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."User"
+    OWNER to postgres;
