@@ -4,10 +4,10 @@
 
 CREATE TABLE IF NOT EXISTS public."Orders"
 (
-    "OrderId" integer NOT NULL,
     "UserId" character varying COLLATE pg_catalog."default",
     "GameId" integer,
-    "Date" date
+    "Date" date,
+    "OrderId" character varying COLLATE pg_catalog."default" NOT NULL
 )
 
 TABLESPACE pg_default;
