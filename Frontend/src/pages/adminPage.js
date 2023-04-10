@@ -1,6 +1,7 @@
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import InputAdornment from "@mui/material/InputAdornment";
 import Autocomplete from "@mui/material/Autocomplete";
 import { fetchGames } from "../store/actions/games.js";
 import { modifyGame } from "../store/actions/modifyGame.js";
@@ -61,8 +62,8 @@ const paperNew = {
 };
 
 const AdminPage = () => {
-  const Alert = React.forwardRef(function Alert (props, ref) {
-    return <MuiAlert elevation={ 6 } ref={ ref } variant="filled" { ...props } />;
+  const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
   });
   const [open, setOpen] = React.useState(false);
   const [alertText, setAlertText] = React.useState("");
@@ -88,28 +89,28 @@ const AdminPage = () => {
     dispatch(fetchGames("all", titleInput, 1, 20));
   }, [titleInput, dispatch]);
 
-  function deleteButtonClick (gameID) {
+  function deleteButtonClick(gameID) {
     dispatch(deleteGame(gameID));
     setAlertSeverity("error");
     setAlertText("Product successfully deleted from database!");
     handleClick();
   }
 
-  function modifyButtonClick () {
+  function modifyButtonClick() {
     dispatch(modifyGame(selectedGame));
     setAlertSeverity("info");
     setAlertText("Product data successfully modified!");
     handleClick();
   }
 
-  function addButtonClick () {
+  function addButtonClick() {
     dispatch(addGame(addGameData));
     setAlertSeverity("success");
     setAlertText("Product successfully added to database!");
     handleClick();
   }
 
-  function selectGame (title) {
+  function selectGame(title) {
     const searchedGame = data.data.find((game) => game.Title === title);
     console.log(searchedGame);
     setSelectedGame(searchedGame);
@@ -130,37 +131,37 @@ const AdminPage = () => {
 
   return (
     <>
-      <Paper elevation={ 3 } text-align="center" style={ paperModify }>
+      <Paper elevation={3} text-align="center" style={paperModify}>
         <h1>Search for game</h1>
         <Autocomplete
           disablePortal
           id="combo-box-demo"
-          options={ gameTitles }
-          onChange={ (e, newValue) => selectGame(newValue) }
-          sx={ { width: "98%" } }
-          renderInput={ (params) => <TextField { ...params } label="Games" /> }
-          onInputChange={ (event, newValue) => setTitleInput(newValue) }
-          inputValue={ titleInput }
+          options={gameTitles}
+          onChange={(e, newValue) => selectGame(newValue)}
+          sx={{ width: "98%" }}
+          renderInput={(params) => <TextField {...params} label="Games" />}
+          onInputChange={(event, newValue) => setTitleInput(newValue)}
+          inputValue={titleInput}
         />
         <Button
           size="large"
           variant="contained"
           color="error"
-          style={ deleteButton }
-          startIcon={ <DeleteIcon /> }
-          onClick={ e => deleteButtonClick(selectedGame.Id) }
+          style={deleteButton}
+          startIcon={<DeleteIcon />}
+          onClick={(e) => deleteButtonClick(selectedGame.Id)}
         >
           Delete
         </Button>
 
-        <h1 style={ title }>Modifications</h1>
+        <h1 style={title}>Modifications</h1>
         <TextField
           id="input-modified-title"
           label="Title"
           variant="standard"
-          style={ inputField }
-          value={ (selectedGame && selectedGame.Title) ?? "" }
-          onChange={ (e) =>
+          style={inputField}
+          value={(selectedGame && selectedGame.Title) ?? ""}
+          onChange={(e) =>
             setSelectedGame({ ...selectedGame, Title: e.target.value })
           }
         />
@@ -168,9 +169,9 @@ const AdminPage = () => {
           id="input-modified-img"
           label="Image url"
           variant="standard"
-          style={ inputField }
-          value={ (selectedGame && selectedGame.Image) ?? "" }
-          onChange={ (e) =>
+          style={inputField}
+          value={(selectedGame && selectedGame.Image) ?? ""}
+          onChange={(e) =>
             setSelectedGame({ ...selectedGame, Image: e.target.value })
           }
         />
@@ -178,9 +179,9 @@ const AdminPage = () => {
           id="input-modified-genre"
           label="Genre"
           variant="standard"
-          style={ inputField }
-          value={ (selectedGame && selectedGame.Genre) ?? "" }
-          onChange={ (e) =>
+          style={inputField}
+          value={(selectedGame && selectedGame.Genre) ?? ""}
+          onChange={(e) =>
             setSelectedGame({ ...selectedGame, Genre: e.target.value })
           }
         />
@@ -188,9 +189,9 @@ const AdminPage = () => {
           id="input-modified-ref"
           label="Reference url"
           variant="standard"
-          style={ inputField }
-          value={ (selectedGame && selectedGame.Link) ?? "" }
-          onChange={ (e) =>
+          style={inputField}
+          value={(selectedGame && selectedGame.Link) ?? ""}
+          onChange={(e) =>
             setSelectedGame({ ...selectedGame, Link: e.target.value })
           }
         />
@@ -198,31 +199,31 @@ const AdminPage = () => {
           id="input-modified-price"
           label="Price"
           variant="standard"
-          style={ inputField }
-          value={ (selectedGame && selectedGame.Price) ?? "" }
-          onChange={ (e) =>
+          style={inputField}
+          value={(selectedGame && selectedGame.Price) ?? ""}
+          onChange={(e) =>
             setSelectedGame({ ...selectedGame, Price: e.target.value })
           }
         />
         <Button
           size="large"
           variant="contained"
-          style={ modifyButton }
-          startIcon={ <AutoFixHighIcon /> }
-          onClick={ modifyButtonClick }
+          style={modifyButton}
+          startIcon={<AutoFixHighIcon />}
+          onClick={modifyButtonClick}
         >
           Modify
         </Button>
       </Paper>
 
-      <Paper elevation={ 3 } text-align="center" style={ paperNew }>
+      <Paper elevation={3} text-align="center" style={paperNew}>
         <h1>Add new product</h1>
         <TextField
           id="input-new-title"
           label="Title"
           variant="standard"
-          style={ inputField }
-          onChange={ (e) =>
+          style={inputField}
+          onChange={(e) =>
             setAddGameData({ ...addGameData, Title: e.target.value })
           }
         />
@@ -230,8 +231,8 @@ const AdminPage = () => {
           id="input-new-img"
           label="Image url"
           variant="standard"
-          style={ inputField }
-          onChange={ (e) =>
+          style={inputField}
+          onChange={(e) =>
             setAddGameData({ ...addGameData, Image: e.target.value })
           }
         />
@@ -239,8 +240,8 @@ const AdminPage = () => {
           id="input-new-genre"
           label="Genre"
           variant="standard"
-          style={ inputField }
-          onChange={ (e) =>
+          style={inputField}
+          onChange={(e) =>
             setAddGameData({ ...addGameData, Genre: e.target.value })
           }
         />
@@ -248,8 +249,11 @@ const AdminPage = () => {
           id="input-new-date"
           label="Release date"
           variant="standard"
-          style={ inputField }
-          onChange={ (e) =>
+          style={inputField}
+          InputLabelProps={{
+            shrink: true,
+          }}
+          onChange={(e) =>
             setAddGameData({ ...addGameData, ReleaseDate: e.target.value })
           }
           type="date"
@@ -258,8 +262,8 @@ const AdminPage = () => {
           id="input-new-ref"
           label="Reference url"
           variant="standard"
-          style={ inputField }
-          onChange={ (e) =>
+          style={inputField}
+          onChange={(e) =>
             setAddGameData({ ...addGameData, Link: e.target.value })
           }
         />
@@ -267,32 +271,32 @@ const AdminPage = () => {
           id="input-new-price"
           label="Price"
           variant="standard"
-          style={ inputField }
-          onChange={ (e) =>
+          style={inputField}
+          onChange={(e) =>
             setAddGameData({ ...addGameData, Price: Number(e.target.value) })
           }
-          type='number'
+          type="number"
         />
 
         <Button
           size="large"
           variant="contained"
           color="success"
-          style={ modifyButton }
-          startIcon={ <AddIcon /> }
-          onClick={ addButtonClick }
+          style={modifyButton}
+          startIcon={<AddIcon />}
+          onClick={addButtonClick}
         >
           Add
         </Button>
       </Paper>
 
-      <Snackbar open={ open } autoHideDuration={ 6000 } onClose={ handleClose }>
+      <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert
-          onClose={ handleClose }
-          severity={ alertSeverity }
-          sx={ { width: "100%" } }
+          onClose={handleClose}
+          severity={alertSeverity}
+          sx={{ width: "100%" }}
         >
-          { alertText }
+          {alertText}
         </Alert>
       </Snackbar>
     </>

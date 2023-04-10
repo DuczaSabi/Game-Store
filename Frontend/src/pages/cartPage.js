@@ -54,13 +54,7 @@ const buyButton = {
 };
 
 const CartPage = () => {
-  const totalPrice = 0;
-
-  const calcTotalPrice = () => {
-    for (let i = 0; i < cartItems.length; i++) {
-      totalPrice += cartItems[i].Price;
-    }
-  };
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const [cartItems, setCartItems] = useState(
     sessionStorage.getItem("cart")
@@ -138,7 +132,7 @@ const CartPage = () => {
           <>
             <hr></hr>
             <h2 style={{ textAlign: "left", marginLeft: "45px" }}>
-              Total: {totalPrice}
+              Total: {totalPrice}$
             </h2>
           </>
         ) : null}

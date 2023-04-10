@@ -1,6 +1,6 @@
 const client = require("../config/databaseConnection.js");
 
-async function fetchGames (req, res) {
+async function fetchGames(req, res) {
   let { category, search, page, limit } = req.query;
 
   if (!(page && limit)) {
@@ -10,9 +10,9 @@ async function fetchGames (req, res) {
 
   if (search) {
     const result = await client.query(
-      `SELECT * FROM search('${ search }', ${ page }, ${ limit })`
+      `SELECT * FROM search('${search}', ${page}, ${limit})`
     );
-    const count = await client.query(`SELECT * FROM search_count('${ search }')`);
+    const count = await client.query(`SELECT * FROM search_count('${search}')`);
     const returnObj = {
       page: page,
       limit: limit,
@@ -24,10 +24,10 @@ async function fetchGames (req, res) {
   } else {
     if (!category) category = "all";
     const result = await client.query(
-      `SELECT * FROM sortgenre('${ category }', ${ page }, ${ limit })`
+      `SELECT * FROM sortgenre('${category}', ${page}, ${limit})`
     );
     const count = await client.query(
-      `SELECT * FROM sortgenre_count('${ category }')`
+      `SELECT * FROM sortgenre_count('${category}')`
     );
     const returnObj = {
       page: page,
@@ -40,12 +40,12 @@ async function fetchGames (req, res) {
   }
 }
 
-async function modifyGame (req, res) {
+async function modifyGame(req, res) {
   let { Id, Title, Image, Genre, Link, Price } = req.body;
 
   if (Id) {
     const result = await client.query(
-      `SELECT updategame(${ Id }, '${ Title }', '${ Image }', '${ Genre }', '${ Link }', ${ Price })`
+      `SELECT updategame(${Id}, '${Title}', '${Image}', '${Genre}', '${Link}', ${Price})`
     );
     if (result) {
       res.status(200);
@@ -59,22 +59,22 @@ async function modifyGame (req, res) {
   }
 }
 
-async function addGame (req, res) {
+async function addGame(req, res) {
   let { Title, Image, Genre, ReleaseDate, Link, Price } = req.body;
 
   if (Title || Image || Genre || ReleaseDate || Link || Price) {
-    console.log('🚀 ~ addGame ~ Price:', Price)
-    console.log('🚀 ~ addGame ~ Link:', Link)
-    console.log('🚀 ~ addGame ~ ReleaseDate:', ReleaseDate)
-    console.log('🚀 ~ addGame ~ Genre:', Genre)
-    console.log('🚀 ~ addGame ~ Image:', Image)
-    console.log('🚀 ~ addGame ~ Title:', Title)
-    const title = Title
+    console.log("🚀 ~ addGame ~ Price:", Price);
+    console.log("🚀 ~ addGame ~ Link:", Link);
+    console.log("🚀 ~ addGame ~ ReleaseDate:", ReleaseDate);
+    console.log("🚀 ~ addGame ~ Genre:", Genre);
+    console.log("🚀 ~ addGame ~ Image:", Image);
+    console.log("🚀 ~ addGame ~ Title:", Title);
+    const title = Title;
 
     const result = await client.query(
       `INSERT INTO public."Game"(
         "Title", "Image", "Publisher", "ReleaseDate", "Genre", "Size", "Link", "Price")
-        VALUES ('${ Title }', '${ Image }', ' ', '${ ReleaseDate }', '${ Genre }',  0, '${ Link }', ${ Price });`
+        VALUES ('${Title}', '${Image}', ' ', '${ReleaseDate}', '${Genre}',  0, '${Link}', ${Price});`
     );
     if (result) {
       res.status(200);
@@ -88,12 +88,12 @@ async function addGame (req, res) {
   }
 }
 
-async function deleteGame (req, res) {
-  let Id = req.params.Id
+async function deleteGame(req, res) {
+  let Id = req.params.Id;
 
   if (Id) {
     const result = await client.query(
-      `DELETE FROM "Game" WHERE "Id" = '${ Id }'`
+      `DELETE FROM "Game" WHERE "Id" = '${Id}'`
     );
     if (result) {
       res.status(200);
