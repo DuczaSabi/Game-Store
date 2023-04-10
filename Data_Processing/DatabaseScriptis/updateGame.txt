@@ -6,7 +6,7 @@ CREATE OR REPLACE FUNCTION public.updategame(
 	gameid integer,
 	title character varying,
 	image character varying,
-	genre character varying,
+	genre integer,
 	refurl character varying,
 	price integer)
     RETURNS void

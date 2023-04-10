@@ -58,7 +58,7 @@ const paperNew = {
   position: "relative",
   minWidth: 425,
   width: "40%",
-  height: 757,
+  height: 742,
   paddingLeft: "15px",
   margin: "auto",
   marginLeft: "25px",

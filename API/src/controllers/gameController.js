@@ -52,7 +52,7 @@ async function modifyGame(req, res) {
 
     if (Id) {
       const result = await client.query(
-        `SELECT updategame(${Id}, '${Title}', '${Image}', '${Genre}', '${Link}', ${Price})`
+        `SELECT updategame(${Id}, '${Title}', '${Image}', ${Genre}, '${Link}', ${Price})`
       );
       if (result) {
         res.status(200);
@@ -85,7 +85,7 @@ async function addGame(req, res) {
       const result = await client.query(
         `INSERT INTO public."Game"(
           "Title", "Image", "Publisher", "ReleaseDate", "Genre", "Size", "Link", "Price")
-          VALUES ('${Title}', '${Image}', ' ', '${ReleaseDate}', '${Genre}',  0, '${Link}', ${Price});`
+          VALUES ('${Title}', '${Image}', ' ', '${ReleaseDate}', ${Genre},  0, '${Link}', ${Price});`
       );
       if (result) {
         res.status(200);

@@ -64,7 +64,7 @@ const CartPage = ({ onPaymentSuccess }) => {
 
   const removeProduct = (game) => {
     let cartData = JSON.parse(sessionStorage.getItem("cart"));
-    cartData.splice(cartData.indexOf(game), 1);
+    cartData.splice(cartData.map((e) => e.Id).indexOf(game.Id), 1);
     sessionStorage.setItem("cart", JSON.stringify(cartData));
     setCartItems(cartData);
   };

@@ -16,7 +16,7 @@ BEGIN
     RETURN QUERY
 		SELECT COUNT("Id")
         FROM "Game"
-        WHERE LOWER("Game"."Title") LIKE '%'||wantedTitle||'%';
+        WHERE LOWER("Game"."Title") LIKE '%'||LOWER(wantedTitle)||'%';
 END 
 $BODY$;
 

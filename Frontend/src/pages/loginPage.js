@@ -9,7 +9,7 @@ import TextField from "@mui/material/TextField";
 import Input from "@mui/material/Input";
 import InputLabel from "@mui/material/InputLabel";
 import Paper from "@mui/material/Paper";
-import AccountCircle from "@mui/icons-material/AccountCircle";
+import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import IconButton from "@mui/material/IconButton";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -76,13 +76,13 @@ const LoginPage = () => {
         >
           <h1>Login</h1>
           <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-            <AccountCircle sx={{ color: "action.active", mr: 1, mb: 1.5 }} />
+            <EmailIcon sx={{ color: "action.active", mr: 1, mb: 1.5 }} />
             <TextField
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              id="input-username"
-              label="Username  "
+              id="input-email"
+              label="Email  "
               variant="standard"
               sx={{ margin: 1, width: 350 }}
             />
@@ -116,16 +116,15 @@ const LoginPage = () => {
           </Button>
           <Button
             size="large"
-            href="/"
             style={guestButton}
             endIcon={<ArrowForwardIos />}
+            onClick={() => handleLoginAsGuest()}
           >
             Continue to page (As guest)
           </Button>
           <Button
             size="large"
             variant="contained"
-            href=""
             style={loginButton}
             onClick={() => handleLoginBtnClicked()}
           >
