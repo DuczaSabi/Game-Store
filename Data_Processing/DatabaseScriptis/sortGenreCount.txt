@@ -1,9 +1,9 @@
--- FUNCTION: public.sortgenre_count(character varying)
+-- FUNCTION: public.sortgenre_count(integer)
 
--- DROP FUNCTION IF EXISTS public.sortgenre_count(character varying);
+-- DROP FUNCTION IF EXISTS public.sortgenre_count(integer);
 
 CREATE OR REPLACE FUNCTION public.sortgenre_count(
-	wantedgenre character varying)
+	genreid integer)
     RETURNS SETOF bigint 
     LANGUAGE 'plpgsql'
     COST 100
@@ -13,28 +13,18 @@ CREATE OR REPLACE FUNCTION public.sortgenre_count(
 AS $BODY$
 
 BEGIN
-    IF wantedGenre LIKE'all' THEN
+    IF genreID = 0 THEN
     RETURN QUERY
         SELECT COUNT("Id")
         FROM "Game";
-    ELSEIF wantedGenre LIKE 'Free' THEN
-    RETURN QUERY
-        SELECT COUNT("Id")
-        FROM "Game"
-        WHERE "Game"."Price" = 0;
-    ELSEIF wantedGenre LIKE 'New' THEN
-    RETURN QUERY
-        SELECT COUNT("Id")
-        FROM "Game"
-        WHERE "ReleaseDate" >= CURRENT_DATE - INTERVAL '24 months';
     ELSE
     RETURN QUERY
         SELECT COUNT("Id")
         FROM "Game"
-        WHERE "Game"."Genre" LIKE '%'||wantedGenre||'%';
+        WHERE "Game"."Genre" = genreID;
     END IF;
 END 
 $BODY$;
 
-ALTER FUNCTION public.sortgenre_count(character varying)
+ALTER FUNCTION public.sortgenre_count(integer)
     OWNER TO postgres;

@@ -105,7 +105,7 @@ const HomePage = () => {
   ];
   let categLegnth = 0;
 
-  const [category, setCategory] = useState("all");
+  const [category, setCategory] = useState(0);
   const [searchKey, setSearchKey] = useState("");
   const [page, setPage] = useState(1);
 
