@@ -1,15 +1,16 @@
--- Table: public.Genres
+-- Table: public.Orders
 
--- DROP TABLE IF EXISTS public."Genres";
+-- DROP TABLE IF EXISTS public."Orders";
 
-CREATE TABLE IF NOT EXISTS public."Genres"
+CREATE TABLE IF NOT EXISTS public."Orders"
 (
-    "Id" integer NOT NULL,
-    "Name" character varying COLLATE pg_catalog."default",
-    CONSTRAINT "Genres_pkey" PRIMARY KEY ("Id")
+    "OrderId" integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 ),
+    "UserId" character varying COLLATE pg_catalog."default",
+    "GameId" integer,
+    "Date" date
 )
 
 TABLESPACE pg_default;
 
-ALTER TABLE IF EXISTS public."Genres"
+ALTER TABLE IF EXISTS public."Orders"
     OWNER to postgres;
