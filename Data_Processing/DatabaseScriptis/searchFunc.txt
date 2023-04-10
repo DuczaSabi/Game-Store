@@ -18,7 +18,7 @@ BEGIN
     RETURN QUERY
         SELECT *
         FROM "Game"
-        WHERE "Game"."Title" LIKE '%'||wantedTitle||'%'
+        WHERE LOWER("Game"."Title") LIKE '%'||wantedTitle||'%'
 		ORDER BY "Game"."Id"
 		LIMIT(pageLimit)
 		OFFSET((pageNumber -1) * pageLimit);
@@ -28,10 +28,3 @@ $BODY$;
 
 ALTER FUNCTION public.search(character varying, integer, integer)
     OWNER TO postgres;
-	
--- USAGE
-SELECT public.search(
-	<wantedtitle character varying>, 
-	<pagenumber integer>, 
-	<pagelimit integer>
-)
