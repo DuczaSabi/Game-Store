@@ -7,6 +7,7 @@ import signUpReducer from "./reducers/signUpReducer";
 import modifyGameReducer from "./reducers/modifyGameReducer";
 import addGameReducer from "./reducers/addGameReducer";
 import deleteGameReducer from "./reducers/deleteGameReducer";
+import fetchGenresReducer from "./reducers/fetchGenresReducer";
 
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   modifygame: modifyGameReducer,
   addgame: addGameReducer,
   deletegame: deleteGameReducer,
+  genres: fetchGenresReducer,
 });
 
 const store = createStore(

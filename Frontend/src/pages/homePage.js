@@ -14,6 +14,7 @@ import {
   useStepContext,
 } from "@mui/material";
 import { fetchGames } from "../store/actions/games.js";
+import { fetchGenres } from "../store/actions/fetchGenres";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
@@ -110,6 +111,10 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
+    dispatch(fetchGenres())
+  }, [])
+
+  useEffect(() => {
     dispatch(fetchGames(category, searchKey, page, 20));
   }, [page, category, searchKey, dispatch]);
 
@@ -122,6 +127,12 @@ const HomePage = () => {
 
   const gameState = useSelector((state) => state.games);
   const { data, isFetching, errorMessage } = gameState;
+
+  const genreState = useSelector((state) => state.genres);
+  const { genres, genreFetching = isFetching, genreError = errorMessage } = genreState;
+
+  console.log(genres)
+
 
   function addToCart (game) {
     let data = sessionStorage.getItem("cart");
@@ -155,6 +166,8 @@ const HomePage = () => {
   }, 500);
 
   const isGameInCart = gameID => sessionStorage.getItem("cart") && JSON.parse(sessionStorage.getItem("cart")).find(ci => ci.Id === gameID)
+
+  const mapGenre = (genreID) => genres.find(g => g.Id === genreID).Name
 
   return (
     <>
@@ -266,7 +279,7 @@ const HomePage = () => {
                           { game.Title }
                         </Typography>
                         <Typography gutterBottom variant="h7" component="div">
-                          { game.Genre }
+                          { mapGenre(game.Genre) }
                         </Typography>
                       </CardContent>
                     </CardActionArea>
