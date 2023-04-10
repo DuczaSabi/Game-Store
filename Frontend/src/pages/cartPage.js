@@ -49,10 +49,13 @@ const buyButton = {
   minWidth: "420px",
   width: "60%",
   height: "50px",
-  marginTop: "40px",
+  marginTop: "20px",
+  marginBottom: "40px",
 };
 
 const CartPage = () => {
+  const [totalPrice, setTotalPrice] = useState(0);
+
   const [cartItems, setCartItems] = useState(
     sessionStorage.getItem("cart")
       ? JSON.parse(sessionStorage.getItem("cart"))
@@ -100,16 +103,19 @@ const CartPage = () => {
       >
         <h1 style={{ textAlign: "left", marginLeft: "45px" }}>My cart</h1>
         <hr></hr>
-
         {cartItems && cartItems.length > 0
           ? cartItems.map((item, index) => (
               <div key={index} style={product}>
                 <img
-                  src={require("./stockImg.png")}
+                  src={
+                    item.Image != "kep" ? item.Image : require("./stockImg.png")
+                  }
                   alt="Game_Image"
                   style={gameImg}
                 ></img>
-                <p style={gamePrice}>20$</p>
+                <p style={gamePrice}>
+                  {item.Price > 0 ? item.Price + "$" : "Free"}
+                </p>
                 <Button
                   onClick={() => removeProduct(item)}
                   variant="outlined"
@@ -122,6 +128,14 @@ const CartPage = () => {
               </div>
             ))
           : "Still empty... Go get some games"}
+        {cartItems && cartItems.length > 0 ? (
+          <>
+            <hr></hr>
+            <h2 style={{ textAlign: "left", marginLeft: "45px" }}>
+              Total: {totalPrice}$
+            </h2>
+          </>
+        ) : null}
       </Paper>
 
       <Button variant="contained" style={buyButton} onClick={handlePay}>

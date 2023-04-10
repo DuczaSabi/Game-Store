@@ -1,0 +1,15 @@
+-- Table: public.Genres
+
+-- DROP TABLE IF EXISTS public."Genres";
+
+CREATE TABLE IF NOT EXISTS public."Genres"
+(
+    "Id" integer NOT NULL,
+    "Name" character varying COLLATE pg_catalog."default",
+    CONSTRAINT "Genres_pkey" PRIMARY KEY ("Id")
+)
+
+TABLESPACE pg_default;
+
+ALTER TABLE IF EXISTS public."Genres"
+    OWNER to postgres;
