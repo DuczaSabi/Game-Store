@@ -118,7 +118,6 @@ const LoginPage = () => {
             size="large"
             style={guestButton}
             endIcon={<ArrowForwardIos />}
-            onClick={() => handleLoginAsGuest()}
           >
             Continue to page (As guest)
           </Button>
