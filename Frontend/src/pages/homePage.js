@@ -226,6 +226,9 @@ const HomePage = () => {
           style={ logoutRegister }
           onClick={ () => {
             localStorage.removeItem("token");
+            localStorage.removeItem("current_user");
+            sessionStorage.removeItem("cart");
+
           } }
           href="/login"
           sx={ { color: "purple", marginTop: "10px", marginRight: "20px" } }

@@ -31,6 +31,7 @@ export function signUp (email, password, name) {
 
       const user = await axios.post(`http://localhost:3001/api/signup`, { email, password, name });
       localStorage.setItem('token', user.data.token)
+      localStorage.setItem('current_user', email)
       dispatch(signUpSuccess(user.data));
     } catch (error) {
       dispatch(
