@@ -6,6 +6,8 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
+import Modal from '@mui/material/Modal';
+import Box from '@mui/material/Box';
 import {
   Button,
   CardActionArea,
@@ -107,6 +109,8 @@ const HomePage = () => {
   const [category, setCategory] = useState(0);
   const [searchKey, setSearchKey] = useState("");
   const [page, setPage] = useState(1);
+  const [open, setOpen] = React.useState(false);
+  const [currentIframeURL, setCurrentIframeURL] = useState("")
 
   useEffect(() => {
     dispatch(fetchGenres())
@@ -170,6 +174,15 @@ const HomePage = () => {
     if (genre === 'all') return 0
     return genres.find(g => g.Name.toLowerCase() === genre.toLowerCase()).Id
   }
+
+  const handleCardAreaClick = link => {
+    setCurrentIframeURL(link)
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  };
 
   return (
     <>
@@ -260,7 +273,7 @@ const HomePage = () => {
                       textAlign: "left",
                     } }
                   >
-                    <CardActionArea href={ game.Link } target="_blank">
+                    <CardActionArea onClick={ e => handleCardAreaClick(game.Link) }>
                       <CardMedia
                         component="img"
                         height="350"
@@ -321,6 +334,16 @@ const HomePage = () => {
           } }
         />
       </Container>
+      <Modal
+        open={ open }
+        onClose={ handleClose }
+        aria-labelledby="parent-modal-title"
+        aria-describedby="parent-modal-description"
+      >
+        <Box style={ { flexDirection: 'column', display: 'flex', alignContent: 'center', alignItems: 'center', justifyContent: 'center', width: '1000px', height: '1000px' } }>
+          <iframe src={ currentIframeURL } title="W3Schools Free Online Web Tutorials" style={ { height: 1000, width: 1000 } }></iframe>
+        </Box>
+      </Modal >
     </>
   );
 };
