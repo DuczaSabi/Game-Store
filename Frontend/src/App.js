@@ -9,9 +9,9 @@ import history from "./utils/history";
 import PaymentSucess from "./pages/paymentSuccess";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-function App() {
+function App () {
   return (
-    <Router history={history}>
+    <Router history={ history }>
       <Switch>
         <Route path="/login" exact>
           <LoginPage />
@@ -20,19 +20,21 @@ function App() {
           <SignInPage />
         </Route>
         <Route path="/" exact>
-          <ProtectedRoute path="/" component={HomePage}></ProtectedRoute>
+          <ProtectedRoute path="/" component={ HomePage }></ProtectedRoute>
         </Route>
         <Route path="/cart" exact>
-          <ProtectedRoute path="/cart" component={CartPage}></ProtectedRoute>
+          <ProtectedRoute path="/cart" component={ CartPage }></ProtectedRoute>
         </Route>
         <Route path="/payment/success" exact>
-          <ProtectedRoute
-            path="/payment/success"
-            component={PaymentSucess}
-          ></ProtectedRoute>
+          <PaymentSucess />
         </Route>
+        {/* <ProtectedRoute
+          path="/payment/success"
+          component={ PaymentSucess }
+        ></ProtectedRoute> */}
+
         <Route path="/admin" exact>
-          <ProtectedRoute path="/admin" component={AdminPage}></ProtectedRoute>
+          <ProtectedRoute path="/admin" component={ AdminPage }></ProtectedRoute>
         </Route>
       </Switch>
     </Router>
