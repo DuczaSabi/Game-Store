@@ -96,8 +96,6 @@ const products = {};
 const HomePage = () => {
   const dispatch = useDispatch();
   const categories = [
-    "New",
-    "Free",
     "Sport",
     "Shooter",
     "Horror",
@@ -167,7 +165,11 @@ const HomePage = () => {
 
   const isGameInCart = gameID => sessionStorage.getItem("cart") && JSON.parse(sessionStorage.getItem("cart")).find(ci => ci.Id === gameID)
 
-  const mapGenre = (genreID) => genres.find(g => g.Id === genreID).Name
+  const mapGenreLabel = (genreID) => genres.find(g => g.Id === genreID).Name
+  const mapGenreID = (genre) => {
+    if (genre === 'all') return 0
+    return genres.find(g => g.Name.toLowerCase() === genre.toLowerCase()).Id
+  }
 
   return (
     <>
@@ -200,7 +202,7 @@ const HomePage = () => {
                   marginLeft: "15px",
                 } }
                 variant="text"
-                onClick={ () => handleCategoryClick(category) }
+                onClick={ () => handleCategoryClick((mapGenreID(category))) }
               >
                 { category }
               </Button>
@@ -279,7 +281,7 @@ const HomePage = () => {
                           { game.Title }
                         </Typography>
                         <Typography gutterBottom variant="h7" component="div">
-                          { mapGenre(game.Genre) }
+                          { mapGenreLabel(game.Genre) }
                         </Typography>
                       </CardContent>
                     </CardActionArea>
