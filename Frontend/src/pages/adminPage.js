@@ -1,7 +1,8 @@
 import Paper from "@mui/material/Paper";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import InputAdornment from "@mui/material/InputAdornment";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import Autocomplete from "@mui/material/Autocomplete";
 import { fetchGames } from "../store/actions/games.js";
 import { modifyGame } from "../store/actions/modifyGame.js";
@@ -42,7 +43,7 @@ const paperModify = {
   position: "relative",
   minWidth: 425,
   width: "40%",
-  height: 900,
+  height: 885,
   paddingLeft: "15px",
   margin: "auto",
   marginLeft: "25px",
@@ -175,7 +176,7 @@ const AdminPage = () => {
             setSelectedGame({ ...selectedGame, Image: e.target.value })
           }
         />
-        <TextField
+        <Select
           id="input-modified-genre"
           label="Genre"
           variant="standard"
@@ -184,7 +185,51 @@ const AdminPage = () => {
           onChange={(e) =>
             setSelectedGame({ ...selectedGame, Genre: e.target.value })
           }
-        />
+          sx={{ textAlign: "left" }}
+        >
+          <MenuItem value="1">Horror</MenuItem>
+          <MenuItem value="2">Sport</MenuItem>
+          <MenuItem value="3">Shooter</MenuItem>
+          <MenuItem value="4">Adventure</MenuItem>
+          <MenuItem value="5">Strategy</MenuItem>
+          <MenuItem value="6">Party</MenuItem>
+          <MenuItem value="7">Platformer</MenuItem>
+          <MenuItem value="8">Action</MenuItem>
+          <MenuItem value="9">Puzzle</MenuItem>
+          <MenuItem value="10">Fighting</MenuItem>
+
+          <MenuItem value="11">Open world</MenuItem>
+          <MenuItem value="12">Music</MenuItem>
+          <MenuItem value="13">Simulation</MenuItem>
+          <MenuItem value="14">Visual novel</MenuItem>
+          <MenuItem value="15">Roguelite</MenuItem>
+          <MenuItem value="16">Educational & Trivia</MenuItem>
+          <MenuItem value="17">Vehicular Combat</MenuItem>
+          <MenuItem value="18">Role playing</MenuItem>
+          <MenuItem value="19">Mech</MenuItem>
+          <MenuItem value="20">Point & Click</MenuItem>
+
+          <MenuItem value="21">Racing</MenuItem>
+          <MenuItem value="22">Card Game</MenuItem>
+          <MenuItem value="23">Hack & Slash</MenuItem>
+          <MenuItem value="24">Management</MenuItem>
+          <MenuItem value="25">Stealth</MenuItem>
+          <MenuItem value="26">Dungeon Crawler</MenuItem>
+          <MenuItem value="27">Run & Gun</MenuItem>
+          <MenuItem value="28">Tower Defence</MenuItem>
+          <MenuItem value="29">Sandbox</MenuItem>
+          <MenuItem value="30">Collection</MenuItem>
+
+          <MenuItem value="31">Survival</MenuItem>
+          <MenuItem value="32">Casino</MenuItem>
+          <MenuItem value="33">Pinball</MenuItem>
+          <MenuItem value="34">Casino</MenuItem>
+          <MenuItem value="35">MOBA</MenuItem>
+          <MenuItem value="36">Dance</MenuItem>
+          <MenuItem value="37">Battle Royale</MenuItem>
+          <MenuItem value="38">On Rails</MenuItem>
+          <MenuItem value="39">Metroidvania</MenuItem>
+        </Select>
         <TextField
           id="input-modified-ref"
           label="Reference url"
