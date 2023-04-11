@@ -5,7 +5,9 @@ async function saveOrder (req, res) {
   try {
     const { cart, user } = req.body
 
-    if (!cart) res.status(400).send('Empty card cannot be saved')
+    console.log(req.body)
+
+    if (!cart) res.status(400).send('Empty cart cannot be saved')
     const uuid = uuidv4();
     const now = Date.now();
     const date = new Date(now);

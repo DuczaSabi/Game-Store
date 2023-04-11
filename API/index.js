@@ -5,7 +5,10 @@ const app = express();
 const gameRouter = require("./src/routers/gameRouter.js");
 const userRouter = require("./src/routers/userRouter.js");
 const genreRouter = require("./src/routers/genreRouter.js");
-const orderRouter = require("./src/routers/orderRouter.js")
+const orderRouter = require("./src/routers/orderRouter.js");
+const { stripeWebhook } = require("./src/controllers/stripeController.js");
+
+app.post("/api/webhook", express.raw({ type: 'application/json' }), stripeWebhook)
 
 //Middlewares
 app.use(express.json());
