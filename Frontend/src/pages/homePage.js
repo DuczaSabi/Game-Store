@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "../stylesheets/homeStyle.css";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -48,19 +49,20 @@ const searchBar = {
   display: "inline-block",
   color: "purple",
   fontSize: "20px",
+  marginTop: "-40px",
 };
 
 const logoutRegister = {
   display: "inlineBlock",
   position: "absolute",
-  right: "90px",
+  right: 0,
   top: 0,
 };
 
 const cart = {
   display: "inlineBlock",
   position: "absolute",
-  right: 0,
+  right: "90px",
   top: 0,
 };
 
@@ -204,7 +206,7 @@ const HomePage = () => {
                   height: "50px",
                   color: "purple",
                   fontSize: "30px",
-                  marginTop: "-17px",
+                  marginTop: "-20px",
                   marginLeft: "15px",
                 }}
                 variant="text"

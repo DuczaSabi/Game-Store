@@ -54,7 +54,10 @@ const buyButton = {
 };
 
 const CartPage = ({ onPaymentSuccess }) => {
-  const [totalPrice, setTotalPrice] = useState(0);
+  let totalPrice = 0;
+  JSON.parse(sessionStorage.getItem("cart")).map(
+    (e) => (totalPrice += e.Price)
+  );
 
   const [cartItems, setCartItems] = useState(
     sessionStorage.getItem("cart")
@@ -83,8 +86,8 @@ const CartPage = ({ onPaymentSuccess }) => {
         },
       ],
       mode: "payment",
-      successUrl: `${ window.location.origin }/payment/success`,
-      cancelUrl: `${ window.location.origin }`,
+      successUrl: `${window.location.origin}/payment/success`,
+      cancelUrl: `${window.location.origin}`,
       // customerEmail:
     });
     if (error) console.log(error);
@@ -93,66 +96,66 @@ const CartPage = ({ onPaymentSuccess }) => {
   return (
     <>
       <Paper
-        elevation={ 1 }
-        sx={ {
+        elevation={1}
+        sx={{
           minWidth: "420px",
           width: "60%",
           display: "inline-block",
           margin: "40px",
-        } }
+        }}
       >
-        <h1 style={ { textAlign: "left", marginLeft: "45px" } }>My cart</h1>
+        <h1 style={{ textAlign: "left", marginLeft: "45px" }}>My cart</h1>
         <hr></hr>
-        { cartItems && cartItems.length > 0
+        {cartItems && cartItems.length > 0
           ? cartItems.map((item, index) => (
-            <div key={ index } style={ product }>
-              <img
-                src={
-                  item.Image != "kep" ? item.Image : require("./stockImg.png")
-                }
-                alt="Game_Image"
-                style={ gameImg }
-              ></img>
-              <p style={ gamePrice }>
-                { item.Price > 0 ? item.Price + "$" : "Free" }
-              </p>
-              <Button
-                onClick={ () => removeProduct(item) }
-                variant="outlined"
-                style={ removeButton }
-                startIcon={ <DeleteIcon /> }
-              >
-                Remove product
-              </Button>
-              <p style={ gameName }>{ item.Title }</p>
-            </div>
-          ))
-          : "Still empty... Go get some games" }
-        { cartItems && cartItems.length > 0 ? (
+              <div key={index} style={product}>
+                <img
+                  src={
+                    item.Image != "kep" ? item.Image : require("./stockImg.png")
+                  }
+                  alt="Game_Image"
+                  style={gameImg}
+                ></img>
+                <p style={gamePrice}>
+                  {item.Price > 0 ? item.Price + "$" : "Free"}
+                </p>
+                <Button
+                  onClick={() => removeProduct(item)}
+                  variant="outlined"
+                  style={removeButton}
+                  startIcon={<DeleteIcon />}
+                >
+                  Remove product
+                </Button>
+                <p style={gameName}>{item.Title}</p>
+              </div>
+            ))
+          : "Still empty... Go get some games"}
+        {cartItems && cartItems.length > 0 ? (
           <>
             <hr></hr>
-            <h2 style={ { textAlign: "left", marginLeft: "45px" } }>
-              Total: { totalPrice }$
+            <h2 style={{ textAlign: "left", marginLeft: "45px" }}>
+              Total: {totalPrice}$
             </h2>
           </>
-        ) : null }
+        ) : null}
       </Paper>
 
-      <Button variant="contained" style={ buyButton } onClick={ handlePay }>
+      <Button variant="contained" style={buyButton} onClick={handlePay}>
         Pay
       </Button>
 
       <Button
         href="/"
-        sx={ {
+        sx={{
           color: "white",
           borderColor: "white",
           fontSize: "20px",
           position: "fixed",
           bottom: "60px",
           right: "80px",
-        } }
-        startIcon={ <ArrowBackIos /> }
+        }}
+        startIcon={<ArrowBackIos />}
       >
         Leave cart
       </Button>

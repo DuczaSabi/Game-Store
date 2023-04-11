@@ -16,6 +16,7 @@ import React, { useState, useEffect } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import AddIcon from "@mui/icons-material/Add";
+import ArrowBackIos from "@mui/icons-material/ArrowBackIos";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 
@@ -50,7 +51,7 @@ const paperModify = {
   paddingLeft: "15px",
   margin: "auto",
   marginLeft: "25px",
-  marginTop: "25px",
+  marginTop: "40px",
 };
 
 const paperNew = {
@@ -62,7 +63,7 @@ const paperNew = {
   paddingLeft: "15px",
   margin: "auto",
   marginLeft: "25px",
-  marginTop: "25px",
+  marginTop: "40px",
 };
 
 const AdminPage = () => {
@@ -146,6 +147,20 @@ const AdminPage = () => {
 
   return (
     <>
+      <Button
+        href="/"
+        sx={{
+          color: "white",
+          borderColor: "white",
+          fontSize: "20px",
+          position: "fixed",
+          top: "75px",
+          right: "8%",
+        }}
+        startIcon={<ArrowBackIos />}
+      >
+        Leave admin page
+      </Button>
       <Paper elevation={3} text-align="center" style={paperModify}>
         <h1>Search for game</h1>
         <Autocomplete
