@@ -24,12 +24,12 @@ export function signInFail (errorMessage) {
   };
 }
 
-export function signIn (email, password) {
+export function signIn (email, password, guest) {
   return async (dispatch) => {
     try {
       dispatch(signInStart());
 
-      const user = await axios.post(`http://localhost:3001/api/signin`, { email, password });
+      const user = await axios.post(`http://localhost:3001/api/signin`, { email, password, guest });
       localStorage.setItem('token', user.data.token)
       localStorage.setItem('current_user', email)
       dispatch(signInSuccess(user.data));

@@ -54,78 +54,82 @@ const LoginPage = () => {
   };
 
   const handleLoginBtnClicked = () => {
-    console.log(email, password);
     dispatch(signIn(email, password));
   };
 
+  const handleGuestBtnClicked = () => {
+    dispatch(signIn(null, null, true));
+  }
+
   return (
     <>
-      {isAuthenticated && <Redirect push to="/"></Redirect>}
+      { isAuthenticated && <Redirect push to="/"></Redirect> }
       <div>
         <Paper
-          elevation={3}
+          elevation={ 3 }
           text-align="center"
-          sx={{
+          sx={ {
             position: "relative",
             width: 550,
             height: 350,
             paddingLeft: 2,
             margin: "auto",
             marginTop: 25,
-          }}
+          } }
         >
           <h1>Login</h1>
-          <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-            <EmailIcon sx={{ color: "action.active", mr: 1, mb: 1.5 }} />
+          <Box sx={ { display: "flex", alignItems: "flex-end" } }>
+            <EmailIcon sx={ { color: "action.active", mr: 1, mb: 1.5 } } />
             <TextField
-              onChange={(e) => {
+              onChange={ (e) => {
                 setEmail(e.target.value);
-              }}
+              } }
               id="input-email"
               label="Email  "
               variant="standard"
-              sx={{ margin: 1, width: 350 }}
+              sx={ { margin: 1, width: 350 } }
             />
           </Box>
-          <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-            <LockIcon sx={{ color: "action.active", mr: 1, mb: 1.5 }} />
-            <FormControl sx={{ m: 1, width: 350 }} variant="standard">
+          <Box sx={ { display: "flex", alignItems: "flex-end" } }>
+            <LockIcon sx={ { color: "action.active", mr: 1, mb: 1.5 } } />
+            <FormControl sx={ { m: 1, width: 350 } } variant="standard">
               <InputLabel htmlFor="input-password">Password</InputLabel>
               <Input
-                onChange={(e) => {
+                onChange={ (e) => {
                   setPassword(e.target.value);
-                }}
+                } }
                 id="input-password"
-                type={showPassword ? "text" : "password"}
+                type={ showPassword ? "text" : "password" }
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
+                      onClick={ handleClickShowPassword }
+                      onMouseDown={ handleMouseDownPassword }
                     >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                      { showPassword ? <VisibilityOff /> : <Visibility /> }
                     </IconButton>
                   </InputAdornment>
                 }
               />
             </FormControl>
           </Box>
-          <Button href="/signin" size="large" style={signInButton}>
+          <Button href="/signin" size="large" style={ signInButton }>
             Don't have an account yet?
           </Button>
           <Button
             size="large"
-            style={guestButton}
-            endIcon={<ArrowForwardIos />}
+            style={ guestButton }
+            endIcon={ <ArrowForwardIos /> }
+            onClick={ () => handleGuestBtnClicked() }
           >
             Continue to page (As guest)
           </Button>
           <Button
             size="large"
             variant="contained"
-            style={loginButton}
-            onClick={() => handleLoginBtnClicked()}
+            style={ loginButton }
+            onClick={ () => handleLoginBtnClicked() }
           >
             Login
           </Button>

@@ -26,7 +26,9 @@ import Input from "@mui/material/Input";
 import Grow from "@mui/material/Grow";
 import Container from "@mui/material/Container";
 import Pagination from "@mui/material/Pagination";
+import * as jose from 'jose';
 const _ = require("lodash");
+
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {},
@@ -101,9 +103,11 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const [open, setOpen] = React.useState(false);
   const [currentIframeURL, setCurrentIframeURL] = useState("");
+  const [currentUser, setCurrentUser] = useState("")
 
   useEffect(() => {
     dispatch(fetchGenres());
+    currentUserRole()
   }, []);
 
   useEffect(() => {
@@ -127,9 +131,7 @@ const HomePage = () => {
     genreError = errorMessage,
   } = genreState;
 
-  console.log(genres);
-
-  function addToCart(game) {
+  function addToCart (game) {
     let data = sessionStorage.getItem("cart");
 
     if (data === null) data = [];
@@ -141,18 +143,18 @@ const HomePage = () => {
     setCartItemsNumber(cartItemsNumber + 1);
   }
 
-  function handleCategoryClick(category) {
+  function handleCategoryClick (category) {
     setSearchKey("");
     setPage(1);
     setCategory(category);
   }
 
-  function handleSeach(search) {
+  function handleSeach (search) {
     setPage(1);
     setSearchKey(search);
   }
 
-  function handlePageChange(e, pageNo) {
+  function handlePageChange (e, pageNo) {
     setPage(pageNo);
   }
 
@@ -179,28 +181,35 @@ const HomePage = () => {
     setOpen(false);
   };
 
+
+  const currentUserRole = async () => {
+    const decoded = await jose.decodeJwt(localStorage.getItem('token'))
+    setCurrentUser(decoded.role)
+    console.log(decoded)
+  }
+
   return (
     <>
-      <div style={header}>
+      <div style={ header }>
         <img
-          src={require("./gameStoreLogo.webp")}
+          src={ require("./gameStoreLogo.webp") }
           alt="Game Store Logo"
-          style={logo}
+          style={ logo }
         ></img>
         <Input
           placeholder="Search..."
-          style={searchBar}
-          onChange={(e) => {
+          style={ searchBar }
+          onChange={ (e) => {
             debounce_fun(e.target.value);
-          }}
+          } }
         />
-        {categories.map(
+        { categories.map(
           (category, index) => (
             (categLegnth = category.length),
             (
               <Button
-                key={index}
-                sx={{
+                key={ index }
+                sx={ {
                   display: "inline-block",
                   width: 60 + categLegnth * 15 + "px",
                   height: "50px",
@@ -208,139 +217,167 @@ const HomePage = () => {
                   fontSize: "30px",
                   marginTop: "-20px",
                   marginLeft: "15px",
-                }}
+                } }
                 variant="text"
-                onClick={() => handleCategoryClick(mapGenreID(category))}
+                onClick={ () => handleCategoryClick(mapGenreID(category)) }
               >
-                {category}
+                { category }
               </Button>
             )
           )
-        )}
+        ) }
         <IconButton
-          style={logoutRegister}
-          onClick={() => {
+          style={ logoutRegister }
+          onClick={ () => {
             localStorage.removeItem("token");
-          }}
+            sessionStorage.removeItem("cart")
+          } }
           href="/login"
-          sx={{ color: "purple", marginTop: "10px", marginRight: "20px" }}
+          sx={ { color: "purple", marginTop: "10px", marginRight: "20px" } }
         >
           <LogoutIcon
-            sx={{
+            sx={ {
               width: "50px",
               height: "50px",
-            }}
+            } }
           ></LogoutIcon>
         </IconButton>
 
-        <IconButton
-          style={cart}
-          href="/cart"
-          aria-label="cart"
-          sx={{ color: "purple", marginTop: "10px", marginRight: "20px" }}
-        >
-          <StyledBadge badgeContent={cartItemsNumber} color="secondary">
-            <ShoppingCartIcon
-              sx={{
+        {
+          currentUser === "user" && (<IconButton
+            style={ cart }
+            href="/cart"
+            aria-label="cart"
+            sx={ { color: "purple", marginTop: "10px", marginRight: "20px" } }
+          >
+            <StyledBadge badgeContent={ cartItemsNumber } color="secondary">
+              <ShoppingCartIcon
+                sx={ {
+                  width: "50px",
+                  height: "50px",
+                } }
+              ></ShoppingCartIcon>
+            </StyledBadge>
+          </IconButton>)
+        }
+
+        {
+          currentUser === "admin" && (<IconButton
+            style={ cart }
+            href="/admin"
+            aria-label="admin"
+            sx={ { color: "purple", marginTop: "10px", marginRight: "20px" } }
+          >
+
+            <GroupAddIcon
+              sx={ {
                 width: "50px",
                 height: "50px",
-              }}
-            ></ShoppingCartIcon>
-          </StyledBadge>
-        </IconButton>
+              } }
+            ></GroupAddIcon>
+
+          </IconButton>)
+        }
+
+
       </div>
-      <div style={products}>
-        {isFetching
+      <div style={ products }>
+        { isFetching
           ? "Loading products"
           : errorMessage
-          ? "error"
-          : data && data.data.length > 0
-          ? data.data.map((game, index) => (
-              <Grow in={true}>
-                <Card
-                  key={index}
-                  sx={{
-                    width: 350,
-                    height: 500,
-                    display: "inline-block",
-                    position: "relative",
-                    margin: 2,
-                    textAlign: "left",
-                  }}
-                >
-                  <CardActionArea
-                    onClick={(e) => handleCardAreaClick(game.Link)}
+            ? "error"
+            : data && data.data.length > 0
+              ? data.data.map((game, index) => (
+                <Grow in={ true }>
+                  <Card
+                    key={ index }
+                    sx={ {
+                      width: 350,
+                      height: 500,
+                      display: "inline-block",
+                      position: "relative",
+                      margin: 2,
+                      textAlign: "left",
+                    } }
                   >
-                    <CardMedia
-                      component="img"
-                      height="350"
-                      image={
-                        game.Image != "kep"
-                          ? game.Image
-                          : require("./stockImg.png")
-                      }
-                      alt="game image"
-                    />
-                    <CardContent>
-                      <Typography
-                        gutterBottom
-                        variant="h5"
-                        component="div"
-                        sx={{ lineHeight: "20px", textOverflow: "ellipsis" }}
-                      >
-                        {game.Title}
-                      </Typography>
-                      <Typography gutterBottom variant="h7" component="div">
-                        {mapGenreLabel(game.Genre)}
-                      </Typography>
-                    </CardContent>
-                  </CardActionArea>
-                  <CardActions>
-                    <Button
-                      disabled={isGameInCart(game.Id)}
-                      style={addButton}
-                      onClick={() => addToCart(game)}
+                    <CardActionArea
+                      onClick={ (e) => handleCardAreaClick(game.Link) }
                     >
-                      {isGameInCart(game.Id) ? "In cart" : "Add to cart"}
-                    </Button>
-                    <Typography style={price}>
-                      {game.Price > 0 ? game.Price + "$" : "Free"}
-                    </Typography>
-                  </CardActions>
-                </Card>
-              </Grow>
-            ))
-          : "no games found"}
+                      <CardMedia
+                        component="img"
+                        height="350"
+                        image={
+                          game.Image != "kep"
+                            ? game.Image
+                            : require("./stockImg.png")
+                        }
+                        alt="game image"
+                      />
+                      <CardContent>
+                        <Typography
+                          gutterBottom
+                          variant="h5"
+                          component="div"
+                          sx={ { lineHeight: "20px", textOverflow: "ellipsis" } }
+                        >
+                          { game.Title }
+                        </Typography>
+                        <Typography gutterBottom variant="h7" component="div">
+                          { mapGenreLabel(game.Genre) }
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                    <CardActions>
+                      {
+                        currentUser === "user" && (
+                          <Button
+                            disabled={ isGameInCart(game.Id) }
+                            style={ addButton }
+                            onClick={ () => addToCart(game) }
+                          >
+                            { isGameInCart(game.Id) ? "In cart" : "Add to cart" }
+                          </Button>
+                        )
+                      }
+
+                      <Typography style={ price }>
+                        { game.Price > 0 ? game.Price + "$" : "Free" }
+                      </Typography>
+                    </CardActions>
+                  </Card>
+                </Grow>
+              ))
+              : "no games found" }
       </div>
       <Container
         maxWidth="sm"
-        sx={{
+        sx={ {
           direction: "column",
           alignItems: "center",
           justifyContent: "center",
-        }}
+        } }
       >
         <Pagination
-          count={Math.ceil(data.count / data.limit) || 1}
+          count={ Math.ceil(data.count / data.limit) || 1 }
           variant="outlined"
           color="secondary"
           size="large"
-          style={pagination}
-          page={page}
-          onChange={(e, pageNo) => {
+          style={ pagination }
+          page={ page }
+          onChange={ (e, pageNo) => {
             handlePageChange(e, pageNo);
-          }}
+          } }
         />
       </Container>
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={ open }
+        onClose={ handleClose }
         aria-labelledby="parent-modal-title"
         aria-describedby="parent-modal-description"
-        sx={{ marginLeft: "18%" }}
+        sx={ { marginLeft: "18%" } }
       >
         <Box
-          style={{
+          style={ {
             flexDirection: "column",
             display: "flex",
             alignContent: "center",
@@ -348,12 +385,12 @@ const HomePage = () => {
             justifyContent: "center",
             width: "80%",
             height: "1000px",
-          }}
+          } }
         >
           <iframe
-            src={currentIframeURL}
+            src={ currentIframeURL }
             title="W3Schools Free Online Web Tutorials"
-            style={{ height: 1000, width: 1000 }}
+            style={ { height: 1000, width: 1000 } }
           ></iframe>
         </Box>
       </Modal>
