@@ -10,6 +10,7 @@ A fully functional video game webstore made with **React**, **Material UI**, **N
 - Login/Logout/Register
 - Stripe integration for **safe & easy payment**
 - Automated **email replies** with product data after purchase
+- **Admin interface** for modifying, adding and deleting products
 
 # Images
 *On the drafts below, the product images are not displayed and they all have a prefixed stock image, unlike the working version, where every product has it's own image displayed. (obviously)*
